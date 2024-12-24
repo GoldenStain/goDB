@@ -30,7 +30,7 @@ type Customer struct {
 	Address        string           `gorm:"size:512;not null"`
 	AccountBalance int32            `gorm:"not null;default:0"`
 	CreditLevel    int32            `gorm:"not null"`
-	CustomerOrders []*CustomerOrder `gorm:"foreignKey:CustomerOnlineID"`
+	CustomerOrders []*CustomerOrder `gorm:"foreignKey:CustomerOnlineID;references:OnlineID"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
 }

@@ -63,14 +63,13 @@ func TestCustomerOrderService(t *testing.T) {
 
 	// 修改客户订单信息
 	updateReq := &pb.UpdateCustomerOrderRequest{
-		Id:               1,
-		OrderDate:        "2023-02-01",
-		CustomerOnlineId: "updated_online_id",
-		BookNo:           "B001-updated",
-		BookCount:        20,
-		Price:            200,
-		Address:          "Updated Address",
-		Status:           "已发货",
+		Id:        1,
+		OrderDate: "2023-02-01",
+		BookNo:    "B001-updated",
+		BookCount: 20,
+		Price:     200,
+		Address:   "Updated Address",
+		Status:    "已发货",
 	}
 	updateResp, err := server.UpdateCustomerOrder(context.Background(), updateReq)
 	assert.NoError(t, err)
@@ -89,7 +88,7 @@ func TestCustomerOrderService(t *testing.T) {
 
 	updatedOrder := getResp.CustomerOrders[0]
 	assert.Equal(t, "2023-02-01", updatedOrder.OrderDate)
-	assert.Equal(t, "updated_online_id", updatedOrder.CustomerOnlineId)
+	assert.Equal(t, "online_id_1", updatedOrder.CustomerOnlineId)
 	assert.Equal(t, "B001-updated", updatedOrder.BookNo)
 	assert.Equal(t, int32(20), updatedOrder.BookCount)
 	assert.Equal(t, int32(200), updatedOrder.Price)

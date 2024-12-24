@@ -56,7 +56,7 @@ func TestCreateAndGetBook(t *testing.T) {
 		assert.Equal(t, fmt.Sprintf("B%03d", i), book.BookNo)
 		assert.Equal(t, fmt.Sprintf("Book Title %d", i), book.Title)
 		assert.Equal(t, "Test Publisher", book.PublisherName)
-		assert.Equal(t, float64(10+i), book.Price)
+		assert.Equal(t, int32(10+i), book.Price)
 		assert.Equal(t, int32(100+i), book.StockQuantity)
 		assert.Equal(t, "Author1,Author2", book.Authors)
 		assert.Equal(t, "Keyword1,Keyword2", book.Keywords)

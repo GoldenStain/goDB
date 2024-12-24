@@ -3,6 +3,7 @@ module github.com/GoldenStain/goDB
 go 1.23.0
 
 require (
+	github.com/agnivade/levenshtein v1.2.0
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/grpc v1.69.2
 	google.golang.org/protobuf v1.35.1

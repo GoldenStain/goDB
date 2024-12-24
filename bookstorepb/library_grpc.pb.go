@@ -1574,12 +1574,21 @@ var SupplyBookService_ServiceDesc = grpc.ServiceDesc{
 	Metadata: "library.proto",
 }
 
+const (
+	OnlineService_QueryCustomer_FullMethodName = "/bookstore.OnlineService/QueryCustomer"
+	OnlineService_QueryBook_FullMethodName     = "/bookstore.OnlineService/QueryBook"
+)
+
 // OnlineServiceClient is the client API for OnlineService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// --------------------------------------------网上查询部分--------------------------------------------
+// 网上查询服务
 type OnlineServiceClient interface {
+	// 查询客户
+	QueryCustomer(ctx context.Context, in *QueryCustomerRequest, opts ...grpc.CallOption) (*QueryCustomerResponse, error)
+	// 查询书籍
+	QueryBook(ctx context.Context, in *QueryBookRequest, opts ...grpc.CallOption) (*QueryBookResponse, error)
 }
 
 type onlineServiceClient struct {
@@ -1590,12 +1599,36 @@ func NewOnlineServiceClient(cc grpc.ClientConnInterface) OnlineServiceClient {
 	return &onlineServiceClient{cc}
 }
 
+func (c *onlineServiceClient) QueryCustomer(ctx context.Context, in *QueryCustomerRequest, opts ...grpc.CallOption) (*QueryCustomerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryCustomerResponse)
+	err := c.cc.Invoke(ctx, OnlineService_QueryCustomer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *onlineServiceClient) QueryBook(ctx context.Context, in *QueryBookRequest, opts ...grpc.CallOption) (*QueryBookResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryBookResponse)
+	err := c.cc.Invoke(ctx, OnlineService_QueryBook_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OnlineServiceServer is the server API for OnlineService service.
 // All implementations must embed UnimplementedOnlineServiceServer
 // for forward compatibility.
 //
-// --------------------------------------------网上查询部分--------------------------------------------
+// 网上查询服务
 type OnlineServiceServer interface {
+	// 查询客户
+	QueryCustomer(context.Context, *QueryCustomerRequest) (*QueryCustomerResponse, error)
+	// 查询书籍
+	QueryBook(context.Context, *QueryBookRequest) (*QueryBookResponse, error)
 	mustEmbedUnimplementedOnlineServiceServer()
 }
 
@@ -1606,6 +1639,12 @@ type OnlineServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedOnlineServiceServer struct{}
 
+func (UnimplementedOnlineServiceServer) QueryCustomer(context.Context, *QueryCustomerRequest) (*QueryCustomerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryCustomer not implemented")
+}
+func (UnimplementedOnlineServiceServer) QueryBook(context.Context, *QueryBookRequest) (*QueryBookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryBook not implemented")
+}
 func (UnimplementedOnlineServiceServer) mustEmbedUnimplementedOnlineServiceServer() {}
 func (UnimplementedOnlineServiceServer) testEmbeddedByValue()                       {}
 
@@ -1627,13 +1666,58 @@ func RegisterOnlineServiceServer(s grpc.ServiceRegistrar, srv OnlineServiceServe
 	s.RegisterService(&OnlineService_ServiceDesc, srv)
 }
 
+func _OnlineService_QueryCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryCustomerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OnlineServiceServer).QueryCustomer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OnlineService_QueryCustomer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OnlineServiceServer).QueryCustomer(ctx, req.(*QueryCustomerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OnlineService_QueryBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryBookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OnlineServiceServer).QueryBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OnlineService_QueryBook_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OnlineServiceServer).QueryBook(ctx, req.(*QueryBookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OnlineService_ServiceDesc is the grpc.ServiceDesc for OnlineService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var OnlineService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "bookstore.OnlineService",
 	HandlerType: (*OnlineServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "library.proto",
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "QueryCustomer",
+			Handler:    _OnlineService_QueryCustomer_Handler,
+		},
+		{
+			MethodName: "QueryBook",
+			Handler:    _OnlineService_QueryBook_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "library.proto",
 }

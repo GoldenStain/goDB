@@ -166,7 +166,11 @@ func (s *CustomerOrderServiceServer) UpdateCustomerOrder(ctx context.Context, re
 		customerOrder.OrderDate = req.GetOrderDate()
 	}
 	if req.GetCustomerOnlineId() != "" {
-		customerOrder.CustomerOnlineID = req.GetCustomerOnlineId()
+		// 这个字段不能更改
+		return &pb.UpdateCustomerOrderResponse{
+			Success:  false,
+			Feedback: "Customer ID or CustomerOnelineId cannot be changed",
+		}, nil
 	}
 	if req.GetBookNo() != "" {
 		customerOrder.BookNo = req.GetBookNo()

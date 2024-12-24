@@ -110,6 +110,10 @@ func registerRpcServices(gServer *grpc.Server, db *gorm.DB) {
 	// 供书单
 	supplyBookService := services.NewSupplyBookServiceServer(db)
 	pb.RegisterSupplyBookServiceServer(gServer, supplyBookService)
+
+	// 网上查询服务
+	onlineService := services.NewOnlineServiceServer(db)
+	pb.RegisterOnlineServiceServer(gServer, onlineService)
 }
 
 func StartServer(db *gorm.DB) {

@@ -23,15 +23,30 @@ type Book struct {
 
 // 客户
 type Customer struct {
-	ID             int32  `gorm:"primaryKey"`
-	OnlineID       string `gorm:"unique;not null;size:255"`
-	Password       string `gorm:"size:255;not null"`
-	Name           string `gorm:"size:255;not null"`
-	Address        string `gorm:"size:512;not null"`
-	AccountBalance int32  `gorm:"not null;default:0"`
-	CreditLevel    int32  `gorm:"not null"`
+	ID             int32            `gorm:"primaryKey"`
+	OnlineID       string           `gorm:"unique;not null;size:255"`
+	Password       string           `gorm:"size:255;not null"`
+	Name           string           `gorm:"size:255;not null"`
+	Address        string           `gorm:"size:512;not null"`
+	AccountBalance int32            `gorm:"not null;default:0"`
+	CreditLevel    int32            `gorm:"not null"`
+	CustomerOrders []*CustomerOrder `gorm:"foreignKey:CustomerOnlineID"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
+}
+
+type CustomerOrder struct {
+	ID        int32  `gorm:"primaryKey"`
+	OrderDate string `gorm:"not null;size:50"`
+	// 客户的在线ID
+	CustomerOnlineID string `gorm:"size:255"`
+	BookNo           string `gorm:"not null;size:255"`
+	BookCount        int32  `gorm:"not null"`
+	Price            int32  `gorm:"not null;default:0"`
+	Address          string `gorm:"size:512;not null"`
+	Status           string `gorm:"not null;size:50;default:'未发货'"`
+	CreatedAt        time.Time
+	UpdatedAt        time.Time
 }
 
 // 缺书登记
@@ -64,21 +79,6 @@ type PurchaseOrder struct {
 	UpdatedAt time.Time
 }
 
-type CustomerOrder struct {
-	ID        int32  `gorm:"primaryKey"`
-	OrderDate string `gorm:"not null;size:50"`
-	// 一个是数据库内部存储的ID，一个是客户的在线ID
-	CustomerID       int32  `gorm:"not null;default:0"`
-	CustomerOnlineID string `gorm:"size:255"`
-	BookNo           string `gorm:"not null;size:255"`
-	BookCount        int32  `gorm:"not null"`
-	Price            int32  `gorm:"not null;default:0"`
-	Address          string `gorm:"size:512;not null"`
-	Status           string `gorm:"not null;size:50;default:'未发货'"`
-	CreatedAt        time.Time
-	UpdatedAt        time.Time
-}
-
 type SupplyBook struct {
 	ID            int32  `gorm:"primaryKey"`
 	BookNo        string `gorm:"unique;not null;size:255"`
@@ -92,11 +92,11 @@ type SupplyBook struct {
 }
 
 type Supplier struct {
-	ID          int32        `gorm:"primaryKey"`
-	Name        string       `gorm:"size:255;not null"`
-	BasicInfo   string       `gorm:"size:1024"`
-	SupplyInfo  string       `gorm:"size:1024"`
-	SupplyBooks []SupplyBook `gorm:"foreignKey:SupplierID"`
+	ID          int32         `gorm:"primaryKey"`
+	Name        string        `gorm:"size:255;not null"`
+	BasicInfo   string        `gorm:"size:1024"`
+	SupplyInfo  string        `gorm:"size:1024"`
+	SupplyBooks []*SupplyBook `gorm:"foreignKey:SupplierID"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
@@ -110,5 +110,6 @@ func AutoMigrate(db *gorm.DB) error {
 		&PurchaseOrder{},
 		&CustomerOrder{},
 		&Supplier{},
+		&SupplyBook{},
 	)
 }

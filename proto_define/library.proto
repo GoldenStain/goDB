@@ -49,6 +49,7 @@ message Customer {
   int32 credit_level = 7;
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
+  repeated CustomerOrder customer_orders = 10;
 }
 
 // 缺书登记
@@ -85,7 +86,6 @@ message PurchaseOrder {
 message CustomerOrder {
   int32 id = 1;
   string order_date = 2;
-  int32 customer_id = 3;
   string customer_online_id = 4;
   string book_no = 5;
   int32 book_count = 6;
@@ -433,7 +433,6 @@ service CustomerOrderService {
 // 创建客户订单请求
 message CreateCustomerOrderRequest {
   string order_date = 1;
-  int32 customer_id = 2;
   string customer_online_id = 3;
   string book_no = 4;
   int32 book_count = 5;
@@ -465,7 +464,6 @@ message GetCustomerOrderResponse {
 message UpdateCustomerOrderRequest {
   int32 id = 1;
   string order_date = 2;
-  int32 customer_id = 3;
   string customer_online_id = 4;
   string book_no = 5;
   int32 book_count = 6;
@@ -506,7 +504,7 @@ message CreateSupplierRequest {
   string name = 1;
   string basic_info = 2;
   string supply_info = 3;
-  string 
+  repeated SupplyBook supply_books = 4;
 }
 
 // 创建供应商应答
@@ -525,7 +523,7 @@ message GetSupplierRequest {
 message GetSupplierResponse {
   bool success = 1;
   string feedback = 2;
-  Supplier supplier = 3;
+  repeated Supplier suppliers = 3;
 }
 
 // 更新供应商请求
@@ -534,6 +532,7 @@ message UpdateSupplierRequest {
   string name = 2;
   string basic_info = 3;
   string supply_info = 4;
+  repeated SupplyBook supply_books = 5;
 }
 
 // 更新供应商应答
@@ -552,8 +551,88 @@ message DeleteSupplierResponse {
   bool success = 1;
   string feedback = 2;
 }
+
 /*--------------------------------------------供应商管理部分--------------------------------------------*/
 
-/*--------------------------------------------网上查询部分--------------------------------------------*/
+/*--------------------------------------------供书单部分--------------------------------------------*/
+// 供书记录服务
+service SupplyBookService {
+  rpc CreateSupplyBook(CreateSupplyBookRequest) returns (CreateSupplyBookResponse);
+  rpc GetSupplyBooksBySupplier(GetSupplyBooksBySupplierRequest) returns (GetSupplyBooksBySupplierResponse);
+  rpc GetSupplyBookByID(GetSupplyBookByIDRequest) returns (GetSupplyBookByIDResponse);
+  rpc UpdateSupplyBook(UpdateSupplyBookRequest) returns (UpdateSupplyBookResponse);
+  rpc DeleteSupplyBook(DeleteSupplyBookRequest) returns (DeleteSupplyBookResponse);
+}
 
+// 创建供书记录请求
+message CreateSupplyBookRequest {
+  string book_no = 1;
+  string title = 2;
+  string publisher_name = 3;
+  int32 price = 4;
+  int32 quantity = 5;
+  int32 supplier_id = 6;
+}
+
+// 创建供书记录应答
+message CreateSupplyBookResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 获取供书记录请求
+message GetSupplyBooksBySupplierRequest {
+  int32 supplier_id = 1;
+}
+
+// 获取供书记录应答
+message GetSupplyBooksBySupplierResponse {
+  bool success = 1;
+  string feedback = 2;
+  repeated SupplyBook supply_books = 3;
+}
+
+message GetSupplyBookByIDRequest {
+	int32 id = 1;
+}
+
+message GetSupplyBookByIDResponse {
+	bool success = 1;
+	string feedback = 2;
+	SupplyBook supply_book = 3;
+}
+
+// 更新供书记录请求
+message UpdateSupplyBookRequest {
+  int32 id = 1;
+  string book_no = 2;
+  string title = 3;
+  string publisher_name = 4;
+  int32 price = 5;
+  int32 quantity = 6;
+  int32 supplier_id = 7;
+}
+
+// 更新供书记录应答
+message UpdateSupplyBookResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 删除供书记录请求
+message DeleteSupplyBookRequest {
+  int32 id = 1;
+}
+
+// 删除供书记录应答
+message DeleteSupplyBookResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+/*--------------------------------------------供书单部分--------------------------------------------*/
+
+/*--------------------------------------------网上查询部分--------------------------------------------*/
+service OnlineService {
+
+}
 /*--------------------------------------------网上查询部分--------------------------------------------*/

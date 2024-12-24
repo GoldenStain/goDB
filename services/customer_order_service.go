@@ -31,7 +31,7 @@ func (s *CustomerOrderServiceServer) CreateCustomerOrder(ctx context.Context, re
 		}, nil
 	}
 
-	if req.GetCustomerId() == 0 && req.GetCustomerOnlineId() == "" {
+	if req.GetCustomerOnlineId() == "" {
 		return &pb.CreateCustomerOrderResponse{
 			Success:  false,
 			Feedback: "Customer ID or CustomerOnelineId is required",
@@ -76,7 +76,6 @@ func (s *CustomerOrderServiceServer) CreateCustomerOrder(ctx context.Context, re
 	// 构建新的 CustomerOrder 对象
 	customerOrder := &models.CustomerOrder{
 		OrderDate:        req.GetOrderDate(),
-		CustomerID:       req.GetCustomerId(),
 		CustomerOnlineID: req.GetCustomerOnlineId(),
 		BookNo:           req.GetBookNo(),
 		BookCount:        req.GetBookCount(),
@@ -125,7 +124,6 @@ func (s *CustomerOrderServiceServer) GetCustomerOrder(ctx context.Context, req *
 		pbCustomerOrder := &pb.CustomerOrder{
 			Id:               customerOrder.ID,
 			OrderDate:        customerOrder.OrderDate,
-			CustomerId:       customerOrder.CustomerID,
 			CustomerOnlineId: customerOrder.CustomerOnlineID,
 			BookNo:           customerOrder.BookNo,
 			BookCount:        customerOrder.BookCount,
@@ -167,19 +165,16 @@ func (s *CustomerOrderServiceServer) UpdateCustomerOrder(ctx context.Context, re
 	if req.GetOrderDate() != "" {
 		customerOrder.OrderDate = req.GetOrderDate()
 	}
-	if req.GetCustomerId() != 0 {
-		customerOrder.CustomerID = req.GetCustomerId()
-	}
 	if req.GetCustomerOnlineId() != "" {
 		customerOrder.CustomerOnlineID = req.GetCustomerOnlineId()
 	}
 	if req.GetBookNo() != "" {
 		customerOrder.BookNo = req.GetBookNo()
 	}
-	if req.GetBookCount() != 0 {
+	if req.GetBookCount() != -1 {
 		customerOrder.BookCount = req.GetBookCount()
 	}
-	if req.GetPrice() != 0 {
+	if req.GetPrice() != -1 {
 		customerOrder.Price = req.GetPrice()
 	}
 	if req.GetAddress() != "" {

@@ -28,7 +28,6 @@ func TestCustomerOrderService(t *testing.T) {
 	for i := 1; i <= 5; i++ {
 		req := &pb.CreateCustomerOrderRequest{
 			OrderDate:        "2023-01-01",
-			CustomerId:       int32(i),
 			CustomerOnlineId: fmt.Sprintf("online_id_%d", i),
 			BookNo:           fmt.Sprintf("B%03d", i),
 			BookCount:        int32(10 + i),
@@ -54,7 +53,6 @@ func TestCustomerOrderService(t *testing.T) {
 
 	for i, order := range getResp.CustomerOrders {
 		assert.Equal(t, "2023-01-01", order.OrderDate)
-		assert.Equal(t, int32(i+1), order.CustomerId)
 		assert.Equal(t, fmt.Sprintf("online_id_%d", i+1), order.CustomerOnlineId)
 		assert.Equal(t, fmt.Sprintf("B%03d", i+1), order.BookNo)
 		assert.Equal(t, int32(10+i+1), order.BookCount)
@@ -67,7 +65,6 @@ func TestCustomerOrderService(t *testing.T) {
 	updateReq := &pb.UpdateCustomerOrderRequest{
 		Id:               1,
 		OrderDate:        "2023-02-01",
-		CustomerId:       1,
 		CustomerOnlineId: "updated_online_id",
 		BookNo:           "B001-updated",
 		BookCount:        20,
@@ -92,7 +89,6 @@ func TestCustomerOrderService(t *testing.T) {
 
 	updatedOrder := getResp.CustomerOrders[0]
 	assert.Equal(t, "2023-02-01", updatedOrder.OrderDate)
-	assert.Equal(t, int32(1), updatedOrder.CustomerId)
 	assert.Equal(t, "updated_online_id", updatedOrder.CustomerOnlineId)
 	assert.Equal(t, "B001-updated", updatedOrder.BookNo)
 	assert.Equal(t, int32(20), updatedOrder.BookCount)

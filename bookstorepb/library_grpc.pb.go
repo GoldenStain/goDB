@@ -1095,3 +1095,545 @@ var CustomerOrderService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "library.proto",
 }
+
+const (
+	SupplierService_CreateSupplier_FullMethodName = "/bookstore.SupplierService/CreateSupplier"
+	SupplierService_GetSupplier_FullMethodName    = "/bookstore.SupplierService/GetSupplier"
+	SupplierService_UpdateSupplier_FullMethodName = "/bookstore.SupplierService/UpdateSupplier"
+	SupplierService_DeleteSupplier_FullMethodName = "/bookstore.SupplierService/DeleteSupplier"
+)
+
+// SupplierServiceClient is the client API for SupplierService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// 供应商服务
+type SupplierServiceClient interface {
+	CreateSupplier(ctx context.Context, in *CreateSupplierRequest, opts ...grpc.CallOption) (*CreateSupplierResponse, error)
+	GetSupplier(ctx context.Context, in *GetSupplierRequest, opts ...grpc.CallOption) (*GetSupplierResponse, error)
+	UpdateSupplier(ctx context.Context, in *UpdateSupplierRequest, opts ...grpc.CallOption) (*UpdateSupplierResponse, error)
+	DeleteSupplier(ctx context.Context, in *DeleteSupplierRequest, opts ...grpc.CallOption) (*DeleteSupplierResponse, error)
+}
+
+type supplierServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewSupplierServiceClient(cc grpc.ClientConnInterface) SupplierServiceClient {
+	return &supplierServiceClient{cc}
+}
+
+func (c *supplierServiceClient) CreateSupplier(ctx context.Context, in *CreateSupplierRequest, opts ...grpc.CallOption) (*CreateSupplierResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateSupplierResponse)
+	err := c.cc.Invoke(ctx, SupplierService_CreateSupplier_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *supplierServiceClient) GetSupplier(ctx context.Context, in *GetSupplierRequest, opts ...grpc.CallOption) (*GetSupplierResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSupplierResponse)
+	err := c.cc.Invoke(ctx, SupplierService_GetSupplier_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *supplierServiceClient) UpdateSupplier(ctx context.Context, in *UpdateSupplierRequest, opts ...grpc.CallOption) (*UpdateSupplierResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSupplierResponse)
+	err := c.cc.Invoke(ctx, SupplierService_UpdateSupplier_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *supplierServiceClient) DeleteSupplier(ctx context.Context, in *DeleteSupplierRequest, opts ...grpc.CallOption) (*DeleteSupplierResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSupplierResponse)
+	err := c.cc.Invoke(ctx, SupplierService_DeleteSupplier_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SupplierServiceServer is the server API for SupplierService service.
+// All implementations must embed UnimplementedSupplierServiceServer
+// for forward compatibility.
+//
+// 供应商服务
+type SupplierServiceServer interface {
+	CreateSupplier(context.Context, *CreateSupplierRequest) (*CreateSupplierResponse, error)
+	GetSupplier(context.Context, *GetSupplierRequest) (*GetSupplierResponse, error)
+	UpdateSupplier(context.Context, *UpdateSupplierRequest) (*UpdateSupplierResponse, error)
+	DeleteSupplier(context.Context, *DeleteSupplierRequest) (*DeleteSupplierResponse, error)
+	mustEmbedUnimplementedSupplierServiceServer()
+}
+
+// UnimplementedSupplierServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedSupplierServiceServer struct{}
+
+func (UnimplementedSupplierServiceServer) CreateSupplier(context.Context, *CreateSupplierRequest) (*CreateSupplierResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSupplier not implemented")
+}
+func (UnimplementedSupplierServiceServer) GetSupplier(context.Context, *GetSupplierRequest) (*GetSupplierResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSupplier not implemented")
+}
+func (UnimplementedSupplierServiceServer) UpdateSupplier(context.Context, *UpdateSupplierRequest) (*UpdateSupplierResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSupplier not implemented")
+}
+func (UnimplementedSupplierServiceServer) DeleteSupplier(context.Context, *DeleteSupplierRequest) (*DeleteSupplierResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSupplier not implemented")
+}
+func (UnimplementedSupplierServiceServer) mustEmbedUnimplementedSupplierServiceServer() {}
+func (UnimplementedSupplierServiceServer) testEmbeddedByValue()                         {}
+
+// UnsafeSupplierServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SupplierServiceServer will
+// result in compilation errors.
+type UnsafeSupplierServiceServer interface {
+	mustEmbedUnimplementedSupplierServiceServer()
+}
+
+func RegisterSupplierServiceServer(s grpc.ServiceRegistrar, srv SupplierServiceServer) {
+	// If the following call pancis, it indicates UnimplementedSupplierServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&SupplierService_ServiceDesc, srv)
+}
+
+func _SupplierService_CreateSupplier_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSupplierRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplierServiceServer).CreateSupplier(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SupplierService_CreateSupplier_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplierServiceServer).CreateSupplier(ctx, req.(*CreateSupplierRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SupplierService_GetSupplier_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSupplierRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplierServiceServer).GetSupplier(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SupplierService_GetSupplier_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplierServiceServer).GetSupplier(ctx, req.(*GetSupplierRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SupplierService_UpdateSupplier_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSupplierRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplierServiceServer).UpdateSupplier(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SupplierService_UpdateSupplier_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplierServiceServer).UpdateSupplier(ctx, req.(*UpdateSupplierRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SupplierService_DeleteSupplier_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSupplierRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplierServiceServer).DeleteSupplier(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SupplierService_DeleteSupplier_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplierServiceServer).DeleteSupplier(ctx, req.(*DeleteSupplierRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// SupplierService_ServiceDesc is the grpc.ServiceDesc for SupplierService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var SupplierService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "bookstore.SupplierService",
+	HandlerType: (*SupplierServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateSupplier",
+			Handler:    _SupplierService_CreateSupplier_Handler,
+		},
+		{
+			MethodName: "GetSupplier",
+			Handler:    _SupplierService_GetSupplier_Handler,
+		},
+		{
+			MethodName: "UpdateSupplier",
+			Handler:    _SupplierService_UpdateSupplier_Handler,
+		},
+		{
+			MethodName: "DeleteSupplier",
+			Handler:    _SupplierService_DeleteSupplier_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "library.proto",
+}
+
+const (
+	SupplyBookService_CreateSupplyBook_FullMethodName         = "/bookstore.SupplyBookService/CreateSupplyBook"
+	SupplyBookService_GetSupplyBooksBySupplier_FullMethodName = "/bookstore.SupplyBookService/GetSupplyBooksBySupplier"
+	SupplyBookService_GetSupplyBookByID_FullMethodName        = "/bookstore.SupplyBookService/GetSupplyBookByID"
+	SupplyBookService_UpdateSupplyBook_FullMethodName         = "/bookstore.SupplyBookService/UpdateSupplyBook"
+	SupplyBookService_DeleteSupplyBook_FullMethodName         = "/bookstore.SupplyBookService/DeleteSupplyBook"
+)
+
+// SupplyBookServiceClient is the client API for SupplyBookService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// 供书记录服务
+type SupplyBookServiceClient interface {
+	CreateSupplyBook(ctx context.Context, in *CreateSupplyBookRequest, opts ...grpc.CallOption) (*CreateSupplyBookResponse, error)
+	GetSupplyBooksBySupplier(ctx context.Context, in *GetSupplyBooksBySupplierRequest, opts ...grpc.CallOption) (*GetSupplyBooksBySupplierResponse, error)
+	GetSupplyBookByID(ctx context.Context, in *GetSupplyBookByIDRequest, opts ...grpc.CallOption) (*GetSupplyBookByIDResponse, error)
+	UpdateSupplyBook(ctx context.Context, in *UpdateSupplyBookRequest, opts ...grpc.CallOption) (*UpdateSupplyBookResponse, error)
+	DeleteSupplyBook(ctx context.Context, in *DeleteSupplyBookRequest, opts ...grpc.CallOption) (*DeleteSupplyBookResponse, error)
+}
+
+type supplyBookServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewSupplyBookServiceClient(cc grpc.ClientConnInterface) SupplyBookServiceClient {
+	return &supplyBookServiceClient{cc}
+}
+
+func (c *supplyBookServiceClient) CreateSupplyBook(ctx context.Context, in *CreateSupplyBookRequest, opts ...grpc.CallOption) (*CreateSupplyBookResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateSupplyBookResponse)
+	err := c.cc.Invoke(ctx, SupplyBookService_CreateSupplyBook_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *supplyBookServiceClient) GetSupplyBooksBySupplier(ctx context.Context, in *GetSupplyBooksBySupplierRequest, opts ...grpc.CallOption) (*GetSupplyBooksBySupplierResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSupplyBooksBySupplierResponse)
+	err := c.cc.Invoke(ctx, SupplyBookService_GetSupplyBooksBySupplier_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *supplyBookServiceClient) GetSupplyBookByID(ctx context.Context, in *GetSupplyBookByIDRequest, opts ...grpc.CallOption) (*GetSupplyBookByIDResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSupplyBookByIDResponse)
+	err := c.cc.Invoke(ctx, SupplyBookService_GetSupplyBookByID_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *supplyBookServiceClient) UpdateSupplyBook(ctx context.Context, in *UpdateSupplyBookRequest, opts ...grpc.CallOption) (*UpdateSupplyBookResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSupplyBookResponse)
+	err := c.cc.Invoke(ctx, SupplyBookService_UpdateSupplyBook_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *supplyBookServiceClient) DeleteSupplyBook(ctx context.Context, in *DeleteSupplyBookRequest, opts ...grpc.CallOption) (*DeleteSupplyBookResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSupplyBookResponse)
+	err := c.cc.Invoke(ctx, SupplyBookService_DeleteSupplyBook_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SupplyBookServiceServer is the server API for SupplyBookService service.
+// All implementations must embed UnimplementedSupplyBookServiceServer
+// for forward compatibility.
+//
+// 供书记录服务
+type SupplyBookServiceServer interface {
+	CreateSupplyBook(context.Context, *CreateSupplyBookRequest) (*CreateSupplyBookResponse, error)
+	GetSupplyBooksBySupplier(context.Context, *GetSupplyBooksBySupplierRequest) (*GetSupplyBooksBySupplierResponse, error)
+	GetSupplyBookByID(context.Context, *GetSupplyBookByIDRequest) (*GetSupplyBookByIDResponse, error)
+	UpdateSupplyBook(context.Context, *UpdateSupplyBookRequest) (*UpdateSupplyBookResponse, error)
+	DeleteSupplyBook(context.Context, *DeleteSupplyBookRequest) (*DeleteSupplyBookResponse, error)
+	mustEmbedUnimplementedSupplyBookServiceServer()
+}
+
+// UnimplementedSupplyBookServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedSupplyBookServiceServer struct{}
+
+func (UnimplementedSupplyBookServiceServer) CreateSupplyBook(context.Context, *CreateSupplyBookRequest) (*CreateSupplyBookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSupplyBook not implemented")
+}
+func (UnimplementedSupplyBookServiceServer) GetSupplyBooksBySupplier(context.Context, *GetSupplyBooksBySupplierRequest) (*GetSupplyBooksBySupplierResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSupplyBooksBySupplier not implemented")
+}
+func (UnimplementedSupplyBookServiceServer) GetSupplyBookByID(context.Context, *GetSupplyBookByIDRequest) (*GetSupplyBookByIDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSupplyBookByID not implemented")
+}
+func (UnimplementedSupplyBookServiceServer) UpdateSupplyBook(context.Context, *UpdateSupplyBookRequest) (*UpdateSupplyBookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSupplyBook not implemented")
+}
+func (UnimplementedSupplyBookServiceServer) DeleteSupplyBook(context.Context, *DeleteSupplyBookRequest) (*DeleteSupplyBookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSupplyBook not implemented")
+}
+func (UnimplementedSupplyBookServiceServer) mustEmbedUnimplementedSupplyBookServiceServer() {}
+func (UnimplementedSupplyBookServiceServer) testEmbeddedByValue()                           {}
+
+// UnsafeSupplyBookServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SupplyBookServiceServer will
+// result in compilation errors.
+type UnsafeSupplyBookServiceServer interface {
+	mustEmbedUnimplementedSupplyBookServiceServer()
+}
+
+func RegisterSupplyBookServiceServer(s grpc.ServiceRegistrar, srv SupplyBookServiceServer) {
+	// If the following call pancis, it indicates UnimplementedSupplyBookServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&SupplyBookService_ServiceDesc, srv)
+}
+
+func _SupplyBookService_CreateSupplyBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSupplyBookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplyBookServiceServer).CreateSupplyBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SupplyBookService_CreateSupplyBook_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplyBookServiceServer).CreateSupplyBook(ctx, req.(*CreateSupplyBookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SupplyBookService_GetSupplyBooksBySupplier_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSupplyBooksBySupplierRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplyBookServiceServer).GetSupplyBooksBySupplier(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SupplyBookService_GetSupplyBooksBySupplier_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplyBookServiceServer).GetSupplyBooksBySupplier(ctx, req.(*GetSupplyBooksBySupplierRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SupplyBookService_GetSupplyBookByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSupplyBookByIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplyBookServiceServer).GetSupplyBookByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SupplyBookService_GetSupplyBookByID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplyBookServiceServer).GetSupplyBookByID(ctx, req.(*GetSupplyBookByIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SupplyBookService_UpdateSupplyBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSupplyBookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplyBookServiceServer).UpdateSupplyBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SupplyBookService_UpdateSupplyBook_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplyBookServiceServer).UpdateSupplyBook(ctx, req.(*UpdateSupplyBookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SupplyBookService_DeleteSupplyBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSupplyBookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplyBookServiceServer).DeleteSupplyBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SupplyBookService_DeleteSupplyBook_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplyBookServiceServer).DeleteSupplyBook(ctx, req.(*DeleteSupplyBookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// SupplyBookService_ServiceDesc is the grpc.ServiceDesc for SupplyBookService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var SupplyBookService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "bookstore.SupplyBookService",
+	HandlerType: (*SupplyBookServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateSupplyBook",
+			Handler:    _SupplyBookService_CreateSupplyBook_Handler,
+		},
+		{
+			MethodName: "GetSupplyBooksBySupplier",
+			Handler:    _SupplyBookService_GetSupplyBooksBySupplier_Handler,
+		},
+		{
+			MethodName: "GetSupplyBookByID",
+			Handler:    _SupplyBookService_GetSupplyBookByID_Handler,
+		},
+		{
+			MethodName: "UpdateSupplyBook",
+			Handler:    _SupplyBookService_UpdateSupplyBook_Handler,
+		},
+		{
+			MethodName: "DeleteSupplyBook",
+			Handler:    _SupplyBookService_DeleteSupplyBook_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "library.proto",
+}
+
+// OnlineServiceClient is the client API for OnlineService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// --------------------------------------------网上查询部分--------------------------------------------
+type OnlineServiceClient interface {
+}
+
+type onlineServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewOnlineServiceClient(cc grpc.ClientConnInterface) OnlineServiceClient {
+	return &onlineServiceClient{cc}
+}
+
+// OnlineServiceServer is the server API for OnlineService service.
+// All implementations must embed UnimplementedOnlineServiceServer
+// for forward compatibility.
+//
+// --------------------------------------------网上查询部分--------------------------------------------
+type OnlineServiceServer interface {
+	mustEmbedUnimplementedOnlineServiceServer()
+}
+
+// UnimplementedOnlineServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedOnlineServiceServer struct{}
+
+func (UnimplementedOnlineServiceServer) mustEmbedUnimplementedOnlineServiceServer() {}
+func (UnimplementedOnlineServiceServer) testEmbeddedByValue()                       {}
+
+// UnsafeOnlineServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to OnlineServiceServer will
+// result in compilation errors.
+type UnsafeOnlineServiceServer interface {
+	mustEmbedUnimplementedOnlineServiceServer()
+}
+
+func RegisterOnlineServiceServer(s grpc.ServiceRegistrar, srv OnlineServiceServer) {
+	// If the following call pancis, it indicates UnimplementedOnlineServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&OnlineService_ServiceDesc, srv)
+}
+
+// OnlineService_ServiceDesc is the grpc.ServiceDesc for OnlineService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var OnlineService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "bookstore.OnlineService",
+	HandlerType: (*OnlineServiceServer)(nil),
+	Methods:     []grpc.MethodDesc{},
+	Streams:     []grpc.StreamDesc{},
+	Metadata:    "library.proto",
+}

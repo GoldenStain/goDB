@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 
 	pb "github.com/GoldenStain/goDB/bookstorepb"
 	"github.com/GoldenStain/goDB/models"
@@ -21,6 +22,7 @@ func setupTestDB() *gorm.DB {
 func TestCreateUpdateDeletePurchaseOrder(t *testing.T) {
 	db := setupTestDB()
 	bookServer := NewBookServiceServer(db)
+	stockRequestServer := NewStockRequestServiceServer(db)
 	purchaseOrderServer := NewPurchaseOrderServiceServer(db)
 
 	// 添加几本书
@@ -122,5 +124,49 @@ func TestCreateUpdateDeletePurchaseOrder(t *testing.T) {
 		err := db.First(&purchaseOrder, uint32(i)).Error
 		assert.Error(t, err)
 		assert.Equal(t, gorm.ErrRecordNotFound, err)
+	}
+
+	// 添加几个缺书登记
+	for i := 1; i <= 3; i++ {
+		createStockRequestReq := &pb.CreateStockRequestRequest{
+			BookNo:      fmt.Sprintf("B%03d", i),
+			Title:       fmt.Sprintf("Book Title %d", i),
+			Quantity:    10,
+			RequestDate: time.Now().Format("2006-01-02"),
+			Publisher:   "Test Publisher",
+			Author:      "Test Author",
+			Supplier:    "Test Supplier",
+		}
+		createStockRequestResp, err := stockRequestServer.CreateStockRequest(context.Background(), createStockRequestReq)
+		assert.NoError(t, err)
+		assert.True(t, createStockRequestResp.Success)
+		assert.Equal(t, "Stock request created successfully", createStockRequestResp.Feedback)
+	}
+
+	// 生成采购单
+	generatePurchaseOrdersReq := &pb.GeneratePurchaseOrdersRequest{}
+	generatePurchaseOrdersResp, err := purchaseOrderServer.GeneratePurchaseOrdersFromStockRequests(context.Background(), generatePurchaseOrdersReq)
+	assert.NoError(t, err)
+	assert.True(t, generatePurchaseOrdersResp.Success)
+	assert.Equal(t, "Purchase orders generated successfully", generatePurchaseOrdersResp.Feedback)
+
+	// 查询并验证采购单
+	for i := 1; i <= 3; i++ {
+		var purchaseOrder models.PurchaseOrder
+		err := db.Where("book_no = ?", fmt.Sprintf("B%03d", i)).First(&purchaseOrder).Error
+		assert.NoError(t, err)
+		assert.Equal(t, fmt.Sprintf("Book Title %d", i), purchaseOrder.Title)
+		assert.Equal(t, "Test Publisher", purchaseOrder.Publisher)
+		assert.Equal(t, "Test Supplier", purchaseOrder.Supplier)
+		assert.Equal(t, "Test Author", purchaseOrder.Author)
+		assert.Equal(t, int32(10), purchaseOrder.Quantity)
+	}
+
+	// 验证缺书登记的 Finished 字段是否更新
+	for i := 1; i <= 3; i++ {
+		var stockRequest models.StockRequest
+		err := db.Where("book_no = ?", fmt.Sprintf("B%03d", i)).First(&stockRequest).Error
+		assert.NoError(t, err)
+		assert.True(t, stockRequest.Finished)
 	}
 }

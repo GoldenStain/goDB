@@ -175,10 +175,10 @@ func (s *CustomerOrderServiceServer) UpdateCustomerOrder(ctx context.Context, re
 	if req.GetBookNo() != "" {
 		customerOrder.BookNo = req.GetBookNo()
 	}
-	if req.GetBookCount() != -1 {
+	if req.GetBookCount() != 0 {
 		customerOrder.BookCount = req.GetBookCount()
 	}
-	if req.GetPrice() != -1 {
+	if req.GetPrice() != 0 {
 		customerOrder.Price = req.GetPrice()
 	}
 	if req.GetAddress() != "" {

@@ -422,13 +422,13 @@ func (s *SupplyBookServiceServer) UpdateSupplyBook(ctx context.Context, req *pb.
 	if req.GetPublisherName() != "" {
 		supplyBook.PublisherName = req.GetPublisherName()
 	}
-	if req.GetPrice() != -1 {
+	if req.GetPrice() != 0 {
 		supplyBook.Price = req.GetPrice()
 	}
-	if req.GetQuantity() != -1 {
+	if req.GetQuantity() != 0 {
 		supplyBook.Quantity = req.GetQuantity()
 	}
-	if req.GetSupplierId() != -1 {
+	if req.GetSupplierId() != 0 {
 		supplyBook.SupplierID = req.GetSupplierId()
 	}
 	supplyBook.UpdatedAt = time.Now()

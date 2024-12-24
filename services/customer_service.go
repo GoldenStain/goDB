@@ -157,10 +157,10 @@ func (s *CustomerServiceServer) UpdateCustomer(ctx context.Context, req *pb.Upda
 	if req.GetAddress() != "" {
 		customer.Address = req.GetAddress()
 	}
-	if req.GetAccountBalance() != -1 {
+	if req.GetAccountBalance() != 0 {
 		customer.AccountBalance = req.GetAccountBalance()
 	}
-	if req.GetCreditLevel() != -1 {
+	if req.GetCreditLevel() != 0 {
 		customer.CreditLevel = req.GetCreditLevel()
 	}
 	customer.UpdatedAt = time.Now()

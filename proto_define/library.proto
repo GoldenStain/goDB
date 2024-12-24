@@ -1,0 +1,403 @@
+syntax = "proto3";
+
+package bookstore;
+
+option go_package = "./bookstorepb";
+
+import "google/protobuf/timestamp.proto";
+
+// 出版社
+message Publisher {
+  int32  id = 1;
+  string name = 2;
+  string contact_info = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+// 丛书
+message Series {
+  int32  id = 1;
+  string name = 2;
+  string description = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+// 书籍
+message Book {
+  int32 id = 1;
+  string book_no = 2;
+  string title = 3;
+  string publisher_name = 4;
+  int32 price = 5;
+  string keywords = 6;
+  string authors = 7;
+  int32 stock_quantity = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+// 客户
+message Customer {
+  int32 id = 1;
+  string online_id = 2;
+  string password = 3;
+  string name = 4;
+  string address = 5;
+  int32 account_balance = 6;
+  int32 credit_level = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+// 缺书登记
+message StockRequest {
+  int32  id = 1;
+  string  book_no = 2;
+  string title = 3;
+  int32 quantity = 4;
+  string request_date = 5;
+  string publisher = 6;
+  string author = 7;
+  string supplier = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+  bool finished = 11;
+}
+
+// 采购单
+message PurchaseOrder {
+  int32 id = 1;
+  string book_no = 2;
+  string title = 3;
+  string publisher = 4;
+  string supplier = 5;
+  string author = 6;
+  int32 quantity = 7;
+  string order_date = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+  bool finished = 11;
+}
+
+// 客户订单
+message CustomerOrder {
+  int32 id = 1;
+  string order_date = 2;
+  int32 customer_id = 3;
+  string customer_online_id = 4;
+  int32 price = 5;
+  string address = 6;
+  bool finished = 7;
+}
+
+/*--------------------------------------------书籍部分--------------------------------------------*/
+
+service BookService {
+  // 创建一本新书
+  rpc CreateBook(CreateBookRequest) returns (CreateBookResponse);
+  
+  // 根据书籍ID获取书籍
+  rpc GetBook(GetBookRequest) returns (GetBookResponse);
+
+  // 更新书籍信息
+  rpc UpdateBook(UpdateBookRequest) returns (UpdateBookResponse);
+
+  // 删除书籍
+  rpc DeleteBook(DeleteBookRequest) returns (DeleteBookResponse);
+}
+
+// 创建书籍请求
+message CreateBookRequest {
+  string book_no = 1;
+  string title = 2;
+  string publisher_name = 3;
+  string authors = 4;
+  int32 stock_quantity = 5;
+  int32 price = 6;
+  string keywords = 7;
+}
+
+// 创建书籍应答
+message CreateBookResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 获取书籍请求
+message GetBookRequest {
+  int32 start = 1;
+  int32 stop = 2;
+}
+
+// 获取书籍应答
+message GetBookResponse {
+  repeated Book books = 1;
+  bool success = 2;
+  string feedback = 3;
+}
+
+// 更新书籍请求
+message UpdateBookRequest {
+  string book_no = 1;
+  string title = 2;
+  string publisher_name = 3;
+  string authors = 4;
+  int32 stock_quantity = 5;
+  double price = 6;
+  string keywords = 7;
+}
+
+// 更新书籍应答
+message UpdateBookResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 删除书籍请求
+message DeleteBookRequest {
+  int32  book_id = 1;
+}
+
+// 删除书籍应答
+message DeleteBookResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+/*--------------------------------------------书籍部分--------------------------------------------*/
+
+/*--------------------------------------------缺书部分--------------------------------------------*/
+service StockRequestService {
+  // 创建缺书登记记录
+  rpc CreateStockRequest(CreateStockRequestRequest) returns (CreateStockRequestResponse);
+
+//   // 获取缺书登记的详细信息
+//   rpc GetStockRequest(GetStockRequestRequest) returns (GetStockRequestResponse);
+
+  // 更新缺书登记记录
+  rpc UpdateStockRequest(UpdateStockRequestRequest) returns (UpdateStockRequestResponse);
+
+//   // 删除缺书登记记录
+//   rpc DeleteStockRequest(DeleteStockRequestRequest) returns (DeleteStockRequestResponse);
+}
+
+// 创建缺书登记请求
+message CreateStockRequestRequest {
+  string book_no = 1;
+  string title = 2;
+  string publisher = 3;
+  string supplier = 4;
+  string author = 5;
+  int32 quantity = 6;
+  string request_date = 7;
+}
+
+// 创建缺书登记应答
+message CreateStockRequestResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 更新缺书登记请求
+message UpdateStockRequestRequest {
+  string book_no = 1;
+  string title = 2;
+  string publisher = 3;
+  string supplier = 4;
+  string author = 5;
+  int32 quantity = 6;
+  string request_date = 7;
+  int32 id = 8;
+  bool finished = 9;
+}
+
+// 更新缺书登记应答
+message UpdateStockRequestResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+/*
+// 获取缺书登记请求
+message GetStockRequestRequest {
+  int32  stock_request_id = 1;
+}
+
+// 获取缺书登记应答
+message GetStockRequestResponse {
+  StockRequest stock_request = 1;
+}
+
+// 删除缺书登记请求
+message DeleteStockRequestRequest {
+  int32  stock_request_id = 1;
+}
+
+// 删除缺书登记应答
+message DeleteStockRequestResponse {
+  bool success = 1;
+}
+*/
+/*--------------------------------------------缺书部分--------------------------------------------*/
+
+/*--------------------------------------------采购单部分--------------------------------------------*/
+service PurchaseOrderService {
+  rpc CreatePurchaseOrder(CreatePurchaseOrderRequest) returns (CreatePurchaseOrderResponse);
+  rpc GetPurchaseOrder(GetPurchaseOrderRequest) returns (GetPurchaseOrderResponse);
+  rpc UpdatePurchaseOrder(UpdatePurchaseOrderRequest) returns (UpdatePurchaseOrderResponse);
+  rpc DeletePurchaseOrder(DeletePurchaseOrderRequest) returns (DeletePurchaseOrderResponse);
+  rpc GeneratePurchaseOrdersFromStockRequests(GeneratePurchaseOrdersRequest) returns (GeneratePurchaseOrdersResponse);
+}
+
+// 创建采购单请求
+message CreatePurchaseOrderRequest {
+  string book_no = 1;
+  string title = 2;
+  string publisher = 3;
+  string supplier = 4;
+  string author = 5;
+  int32 quantity = 6;
+  string order_date = 7;
+}
+
+// 创建采购单应答
+message CreatePurchaseOrderResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 获取采购单请求
+message GetPurchaseOrderRequest {
+  int32 start = 1;
+  int32 stop = 2;
+}
+
+// 获取采购单应答
+message GetPurchaseOrderResponse {
+  bool success = 1;
+  string feedback = 2;
+  repeated PurchaseOrder purchase_orders = 3;
+}
+
+// 更新采购单请求
+message UpdatePurchaseOrderRequest {
+  int32 id = 1;
+  string book_no = 2;
+  string title = 3;
+  string publisher = 4;
+  string supplier = 5;
+  string author = 6;
+  int32 quantity = 7;
+  string order_date = 8;
+  bool finished = 9;
+}
+
+// 更新采购单应答
+message UpdatePurchaseOrderResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 删除采购单请求
+message DeletePurchaseOrderRequest {
+  int32 id = 1;
+}
+
+// 删除采购单应答
+message DeletePurchaseOrderResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 生成采购单请求
+message GeneratePurchaseOrdersRequest {}
+
+// 生成采购单应答
+message GeneratePurchaseOrdersResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+/*--------------------------------------------采购单部分--------------------------------------------*/
+
+/*--------------------------------------------客户信息管理部分--------------------------------------------*/
+service CustomerService {
+  // 创建新客户
+  rpc CreateCustomer(CreateCustomerRequest) returns (CreateCustomerResponse);
+
+  // 获取客户详细信息
+  rpc GetCustomer(GetCustomerRequest) returns (GetCustomerResponse);
+
+  // 更新客户信息
+  rpc UpdateCustomer(UpdateCustomerRequest) returns (UpdateCustomerResponse);
+
+  // 删除客户记录
+  rpc DeleteCustomer(DeleteCustomerRequest) returns (DeleteCustomerResponse);
+}
+
+// 创建客户请求
+message CreateCustomerRequest {
+  string online_id = 1;
+  string password = 2;
+  string name = 3;
+  string address = 4;
+  int32 account_balance = 5;
+  int32 credit_level = 6;
+}
+
+// 创建客户应答
+message CreateCustomerResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 获取客户请求
+message GetCustomerRequest {
+  int32 start = 1;
+  int32 stop = 2;
+}
+
+// 获取客户应答
+message GetCustomerResponse {
+  bool success = 1;
+  string feedback = 2;
+  repeated Customer customers = 3;
+}
+
+// 更新客户请求
+message UpdateCustomerRequest {
+  int32 id = 1;
+  string online_id = 2;
+  string password = 3;
+  string name = 4;
+  string address = 5;
+  int32 account_balance = 6;
+  int32 credit_level = 7;
+}
+
+// 更新客户应答
+message UpdateCustomerResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 删除客户请求
+message DeleteCustomerRequest {
+  int32 id = 1;
+}
+
+// 删除客户应答
+message DeleteCustomerResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+/*--------------------------------------------客户信息管理部分--------------------------------------------*/
+
+/*--------------------------------------------订单管理部分--------------------------------------------*/
+
+/*--------------------------------------------订单管理部分--------------------------------------------*/
+
+
+/*--------------------------------------------网上查询部分--------------------------------------------*/
+
+/*--------------------------------------------网上查询部分--------------------------------------------*/

@@ -70,9 +70,35 @@ type CustomerOrder struct {
 	// 一个是数据库内部存储的ID，一个是客户的在线ID
 	CustomerID       int32  `gorm:"not null;default:0"`
 	CustomerOnlineID string `gorm:"size:255"`
+	BookNo           string `gorm:"not null;size:255"`
+	BookCount        int32  `gorm:"not null"`
 	Price            int32  `gorm:"not null;default:0"`
 	Address          string `gorm:"size:512;not null"`
 	Status           string `gorm:"not null;size:50;default:'未发货'"`
+	CreatedAt        time.Time
+	UpdatedAt        time.Time
+}
+
+type SupplyBook struct {
+	ID            int32  `gorm:"primaryKey"`
+	BookNo        string `gorm:"unique;not null;size:255"`
+	Title         string `gorm:"size:255;not null"`
+	PublisherName string `gorm:"size:255"`
+	Price         int32  `gorm:"not null;default:0"`
+	Quantity      int32  `gorm:"not null;default:0"`
+	SupplierID    int32  `gorm:"not null;default:0"`
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+}
+
+type Supplier struct {
+	ID          int32        `gorm:"primaryKey"`
+	Name        string       `gorm:"size:255;not null"`
+	BasicInfo   string       `gorm:"size:1024"`
+	SupplyInfo  string       `gorm:"size:1024"`
+	SupplyBooks []SupplyBook `gorm:"foreignKey:SupplierID"`
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 // AutoMigrate 自动迁移函数
@@ -83,5 +109,6 @@ func AutoMigrate(db *gorm.DB) error {
 		&StockRequest{},
 		&PurchaseOrder{},
 		&CustomerOrder{},
+		&Supplier{},
 	)
 }

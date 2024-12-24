@@ -180,7 +180,7 @@ func (s *PurchaseOrderServiceServer) UpdatePurchaseOrder(ctx context.Context, re
 	if req.GetAuthor() != "" {
 		purchaseOrder.Author = req.GetAuthor()
 	}
-	if req.GetQuantity() != 0 {
+	if req.GetQuantity() != -1 {
 		purchaseOrder.Quantity = req.GetQuantity()
 	}
 	if req.GetOrderDate() != "" {

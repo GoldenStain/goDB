@@ -877,147 +877,219 @@ var CustomerService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	CreditLevelService_UpdateCreditLevel_FullMethodName          = "/bookstore.CreditLevelService/UpdateCreditLevel"
-	CreditLevelService_ListCustomersByCreditLevel_FullMethodName = "/bookstore.CreditLevelService/ListCustomersByCreditLevel"
+	CustomerOrderService_CreateCustomerOrder_FullMethodName = "/bookstore.CustomerOrderService/CreateCustomerOrder"
+	CustomerOrderService_GetCustomerOrder_FullMethodName    = "/bookstore.CustomerOrderService/GetCustomerOrder"
+	CustomerOrderService_UpdateCustomerOrder_FullMethodName = "/bookstore.CustomerOrderService/UpdateCustomerOrder"
+	CustomerOrderService_DeleteCustomerOrder_FullMethodName = "/bookstore.CustomerOrderService/DeleteCustomerOrder"
 )
 
-// CreditLevelServiceClient is the client API for CreditLevelService service.
+// CustomerOrderServiceClient is the client API for CustomerOrderService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// --------------------------------------------信用管理部分--------------------------------------------
-type CreditLevelServiceClient interface {
-	// 更新客户信用等级
-	UpdateCreditLevel(ctx context.Context, in *UpdateCreditLevelRequest, opts ...grpc.CallOption) (*UpdateCreditLevelResponse, error)
-	// 根据信用等级列出客户
-	ListCustomersByCreditLevel(ctx context.Context, in *ListCustomersByCreditLevelRequest, opts ...grpc.CallOption) (*ListCustomersByCreditLevelResponse, error)
+// 客户订单服务
+type CustomerOrderServiceClient interface {
+	CreateCustomerOrder(ctx context.Context, in *CreateCustomerOrderRequest, opts ...grpc.CallOption) (*CreateCustomerOrderResponse, error)
+	GetCustomerOrder(ctx context.Context, in *GetCustomerOrderRequest, opts ...grpc.CallOption) (*GetCustomerOrderResponse, error)
+	UpdateCustomerOrder(ctx context.Context, in *UpdateCustomerOrderRequest, opts ...grpc.CallOption) (*UpdateCustomerOrderResponse, error)
+	DeleteCustomerOrder(ctx context.Context, in *DeleteCustomerOrderRequest, opts ...grpc.CallOption) (*DeleteCustomerOrderResponse, error)
 }
 
-type creditLevelServiceClient struct {
+type customerOrderServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCreditLevelServiceClient(cc grpc.ClientConnInterface) CreditLevelServiceClient {
-	return &creditLevelServiceClient{cc}
+func NewCustomerOrderServiceClient(cc grpc.ClientConnInterface) CustomerOrderServiceClient {
+	return &customerOrderServiceClient{cc}
 }
 
-func (c *creditLevelServiceClient) UpdateCreditLevel(ctx context.Context, in *UpdateCreditLevelRequest, opts ...grpc.CallOption) (*UpdateCreditLevelResponse, error) {
+func (c *customerOrderServiceClient) CreateCustomerOrder(ctx context.Context, in *CreateCustomerOrderRequest, opts ...grpc.CallOption) (*CreateCustomerOrderResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateCreditLevelResponse)
-	err := c.cc.Invoke(ctx, CreditLevelService_UpdateCreditLevel_FullMethodName, in, out, cOpts...)
+	out := new(CreateCustomerOrderResponse)
+	err := c.cc.Invoke(ctx, CustomerOrderService_CreateCustomerOrder_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *creditLevelServiceClient) ListCustomersByCreditLevel(ctx context.Context, in *ListCustomersByCreditLevelRequest, opts ...grpc.CallOption) (*ListCustomersByCreditLevelResponse, error) {
+func (c *customerOrderServiceClient) GetCustomerOrder(ctx context.Context, in *GetCustomerOrderRequest, opts ...grpc.CallOption) (*GetCustomerOrderResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListCustomersByCreditLevelResponse)
-	err := c.cc.Invoke(ctx, CreditLevelService_ListCustomersByCreditLevel_FullMethodName, in, out, cOpts...)
+	out := new(GetCustomerOrderResponse)
+	err := c.cc.Invoke(ctx, CustomerOrderService_GetCustomerOrder_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CreditLevelServiceServer is the server API for CreditLevelService service.
-// All implementations must embed UnimplementedCreditLevelServiceServer
+func (c *customerOrderServiceClient) UpdateCustomerOrder(ctx context.Context, in *UpdateCustomerOrderRequest, opts ...grpc.CallOption) (*UpdateCustomerOrderResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateCustomerOrderResponse)
+	err := c.cc.Invoke(ctx, CustomerOrderService_UpdateCustomerOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerOrderServiceClient) DeleteCustomerOrder(ctx context.Context, in *DeleteCustomerOrderRequest, opts ...grpc.CallOption) (*DeleteCustomerOrderResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteCustomerOrderResponse)
+	err := c.cc.Invoke(ctx, CustomerOrderService_DeleteCustomerOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CustomerOrderServiceServer is the server API for CustomerOrderService service.
+// All implementations must embed UnimplementedCustomerOrderServiceServer
 // for forward compatibility.
 //
-// --------------------------------------------信用管理部分--------------------------------------------
-type CreditLevelServiceServer interface {
-	// 更新客户信用等级
-	UpdateCreditLevel(context.Context, *UpdateCreditLevelRequest) (*UpdateCreditLevelResponse, error)
-	// 根据信用等级列出客户
-	ListCustomersByCreditLevel(context.Context, *ListCustomersByCreditLevelRequest) (*ListCustomersByCreditLevelResponse, error)
-	mustEmbedUnimplementedCreditLevelServiceServer()
+// 客户订单服务
+type CustomerOrderServiceServer interface {
+	CreateCustomerOrder(context.Context, *CreateCustomerOrderRequest) (*CreateCustomerOrderResponse, error)
+	GetCustomerOrder(context.Context, *GetCustomerOrderRequest) (*GetCustomerOrderResponse, error)
+	UpdateCustomerOrder(context.Context, *UpdateCustomerOrderRequest) (*UpdateCustomerOrderResponse, error)
+	DeleteCustomerOrder(context.Context, *DeleteCustomerOrderRequest) (*DeleteCustomerOrderResponse, error)
+	mustEmbedUnimplementedCustomerOrderServiceServer()
 }
 
-// UnimplementedCreditLevelServiceServer must be embedded to have
+// UnimplementedCustomerOrderServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedCreditLevelServiceServer struct{}
+type UnimplementedCustomerOrderServiceServer struct{}
 
-func (UnimplementedCreditLevelServiceServer) UpdateCreditLevel(context.Context, *UpdateCreditLevelRequest) (*UpdateCreditLevelResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateCreditLevel not implemented")
+func (UnimplementedCustomerOrderServiceServer) CreateCustomerOrder(context.Context, *CreateCustomerOrderRequest) (*CreateCustomerOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCustomerOrder not implemented")
 }
-func (UnimplementedCreditLevelServiceServer) ListCustomersByCreditLevel(context.Context, *ListCustomersByCreditLevelRequest) (*ListCustomersByCreditLevelResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListCustomersByCreditLevel not implemented")
+func (UnimplementedCustomerOrderServiceServer) GetCustomerOrder(context.Context, *GetCustomerOrderRequest) (*GetCustomerOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCustomerOrder not implemented")
 }
-func (UnimplementedCreditLevelServiceServer) mustEmbedUnimplementedCreditLevelServiceServer() {}
-func (UnimplementedCreditLevelServiceServer) testEmbeddedByValue()                            {}
+func (UnimplementedCustomerOrderServiceServer) UpdateCustomerOrder(context.Context, *UpdateCustomerOrderRequest) (*UpdateCustomerOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCustomerOrder not implemented")
+}
+func (UnimplementedCustomerOrderServiceServer) DeleteCustomerOrder(context.Context, *DeleteCustomerOrderRequest) (*DeleteCustomerOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCustomerOrder not implemented")
+}
+func (UnimplementedCustomerOrderServiceServer) mustEmbedUnimplementedCustomerOrderServiceServer() {}
+func (UnimplementedCustomerOrderServiceServer) testEmbeddedByValue()                              {}
 
-// UnsafeCreditLevelServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CreditLevelServiceServer will
+// UnsafeCustomerOrderServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CustomerOrderServiceServer will
 // result in compilation errors.
-type UnsafeCreditLevelServiceServer interface {
-	mustEmbedUnimplementedCreditLevelServiceServer()
+type UnsafeCustomerOrderServiceServer interface {
+	mustEmbedUnimplementedCustomerOrderServiceServer()
 }
 
-func RegisterCreditLevelServiceServer(s grpc.ServiceRegistrar, srv CreditLevelServiceServer) {
-	// If the following call pancis, it indicates UnimplementedCreditLevelServiceServer was
+func RegisterCustomerOrderServiceServer(s grpc.ServiceRegistrar, srv CustomerOrderServiceServer) {
+	// If the following call pancis, it indicates UnimplementedCustomerOrderServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&CreditLevelService_ServiceDesc, srv)
+	s.RegisterService(&CustomerOrderService_ServiceDesc, srv)
 }
 
-func _CreditLevelService_UpdateCreditLevel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateCreditLevelRequest)
+func _CustomerOrderService_CreateCustomerOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCustomerOrderRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditLevelServiceServer).UpdateCreditLevel(ctx, in)
+		return srv.(CustomerOrderServiceServer).CreateCustomerOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditLevelService_UpdateCreditLevel_FullMethodName,
+		FullMethod: CustomerOrderService_CreateCustomerOrder_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditLevelServiceServer).UpdateCreditLevel(ctx, req.(*UpdateCreditLevelRequest))
+		return srv.(CustomerOrderServiceServer).CreateCustomerOrder(ctx, req.(*CreateCustomerOrderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CreditLevelService_ListCustomersByCreditLevel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListCustomersByCreditLevelRequest)
+func _CustomerOrderService_GetCustomerOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCustomerOrderRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditLevelServiceServer).ListCustomersByCreditLevel(ctx, in)
+		return srv.(CustomerOrderServiceServer).GetCustomerOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditLevelService_ListCustomersByCreditLevel_FullMethodName,
+		FullMethod: CustomerOrderService_GetCustomerOrder_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditLevelServiceServer).ListCustomersByCreditLevel(ctx, req.(*ListCustomersByCreditLevelRequest))
+		return srv.(CustomerOrderServiceServer).GetCustomerOrder(ctx, req.(*GetCustomerOrderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CreditLevelService_ServiceDesc is the grpc.ServiceDesc for CreditLevelService service.
+func _CustomerOrderService_UpdateCustomerOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCustomerOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerOrderServiceServer).UpdateCustomerOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerOrderService_UpdateCustomerOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerOrderServiceServer).UpdateCustomerOrder(ctx, req.(*UpdateCustomerOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerOrderService_DeleteCustomerOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCustomerOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerOrderServiceServer).DeleteCustomerOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerOrderService_DeleteCustomerOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerOrderServiceServer).DeleteCustomerOrder(ctx, req.(*DeleteCustomerOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// CustomerOrderService_ServiceDesc is the grpc.ServiceDesc for CustomerOrderService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CreditLevelService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "bookstore.CreditLevelService",
-	HandlerType: (*CreditLevelServiceServer)(nil),
+var CustomerOrderService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "bookstore.CustomerOrderService",
+	HandlerType: (*CustomerOrderServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "UpdateCreditLevel",
-			Handler:    _CreditLevelService_UpdateCreditLevel_Handler,
+			MethodName: "CreateCustomerOrder",
+			Handler:    _CustomerOrderService_CreateCustomerOrder_Handler,
 		},
 		{
-			MethodName: "ListCustomersByCreditLevel",
-			Handler:    _CreditLevelService_ListCustomersByCreditLevel_Handler,
+			MethodName: "GetCustomerOrder",
+			Handler:    _CustomerOrderService_GetCustomerOrder_Handler,
+		},
+		{
+			MethodName: "UpdateCustomerOrder",
+			Handler:    _CustomerOrderService_UpdateCustomerOrder_Handler,
+		},
+		{
+			MethodName: "DeleteCustomerOrder",
+			Handler:    _CustomerOrderService_DeleteCustomerOrder_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

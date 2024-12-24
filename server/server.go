@@ -98,6 +98,10 @@ func registerRpcServices(gServer *grpc.Server, db *gorm.DB) {
 	// 客户
 	customerService := services.NewCustomerServiceServer(db)
 	pb.RegisterCustomerServiceServer(gServer, customerService)
+
+	// 销售单/订单
+	customerOrderService := services.NewCustomerOrderServiceServer(db)
+	pb.RegisterCustomerOrderServiceServer(gServer, customerOrderService)
 }
 
 func StartServer(db *gorm.DB) {

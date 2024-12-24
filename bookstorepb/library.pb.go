@@ -651,6 +651,115 @@ func (x *PurchaseOrder) GetFinished() bool {
 	return false
 }
 
+// 客户订单
+type CustomerOrder struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Id               int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	OrderDate        string                 `protobuf:"bytes,2,opt,name=order_date,json=orderDate,proto3" json:"order_date,omitempty"`
+	CustomerId       int32                  `protobuf:"varint,3,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerOnlineId string                 `protobuf:"bytes,4,opt,name=customer_online_id,json=customerOnlineId,proto3" json:"customer_online_id,omitempty"`
+	BookNo           string                 `protobuf:"bytes,5,opt,name=book_no,json=bookNo,proto3" json:"book_no,omitempty"`
+	BookCount        int32                  `protobuf:"varint,6,opt,name=book_count,json=bookCount,proto3" json:"book_count,omitempty"`
+	Price            int32                  `protobuf:"varint,7,opt,name=price,proto3" json:"price,omitempty"`
+	Address          string                 `protobuf:"bytes,8,opt,name=address,proto3" json:"address,omitempty"`
+	Status           string                 `protobuf:"bytes,9,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *CustomerOrder) Reset() {
+	*x = CustomerOrder{}
+	mi := &file_library_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomerOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomerOrder) ProtoMessage() {}
+
+func (x *CustomerOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_library_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomerOrder.ProtoReflect.Descriptor instead.
+func (*CustomerOrder) Descriptor() ([]byte, []int) {
+	return file_library_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CustomerOrder) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *CustomerOrder) GetOrderDate() string {
+	if x != nil {
+		return x.OrderDate
+	}
+	return ""
+}
+
+func (x *CustomerOrder) GetCustomerId() int32 {
+	if x != nil {
+		return x.CustomerId
+	}
+	return 0
+}
+
+func (x *CustomerOrder) GetCustomerOnlineId() string {
+	if x != nil {
+		return x.CustomerOnlineId
+	}
+	return ""
+}
+
+func (x *CustomerOrder) GetBookNo() string {
+	if x != nil {
+		return x.BookNo
+	}
+	return ""
+}
+
+func (x *CustomerOrder) GetBookCount() int32 {
+	if x != nil {
+		return x.BookCount
+	}
+	return 0
+}
+
+func (x *CustomerOrder) GetPrice() int32 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *CustomerOrder) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *CustomerOrder) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
 // 创建书籍请求
 type CreateBookRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -667,7 +776,7 @@ type CreateBookRequest struct {
 
 func (x *CreateBookRequest) Reset() {
 	*x = CreateBookRequest{}
-	mi := &file_library_proto_msgTypes[6]
+	mi := &file_library_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -679,7 +788,7 @@ func (x *CreateBookRequest) String() string {
 func (*CreateBookRequest) ProtoMessage() {}
 
 func (x *CreateBookRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[6]
+	mi := &file_library_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -692,7 +801,7 @@ func (x *CreateBookRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBookRequest.ProtoReflect.Descriptor instead.
 func (*CreateBookRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{6}
+	return file_library_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *CreateBookRequest) GetBookNo() string {
@@ -755,7 +864,7 @@ type CreateBookResponse struct {
 
 func (x *CreateBookResponse) Reset() {
 	*x = CreateBookResponse{}
-	mi := &file_library_proto_msgTypes[7]
+	mi := &file_library_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -767,7 +876,7 @@ func (x *CreateBookResponse) String() string {
 func (*CreateBookResponse) ProtoMessage() {}
 
 func (x *CreateBookResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[7]
+	mi := &file_library_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -780,7 +889,7 @@ func (x *CreateBookResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBookResponse.ProtoReflect.Descriptor instead.
 func (*CreateBookResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{7}
+	return file_library_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *CreateBookResponse) GetSuccess() bool {
@@ -808,7 +917,7 @@ type GetBookRequest struct {
 
 func (x *GetBookRequest) Reset() {
 	*x = GetBookRequest{}
-	mi := &file_library_proto_msgTypes[8]
+	mi := &file_library_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -820,7 +929,7 @@ func (x *GetBookRequest) String() string {
 func (*GetBookRequest) ProtoMessage() {}
 
 func (x *GetBookRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[8]
+	mi := &file_library_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -833,7 +942,7 @@ func (x *GetBookRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBookRequest.ProtoReflect.Descriptor instead.
 func (*GetBookRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{8}
+	return file_library_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetBookRequest) GetStart() int32 {
@@ -862,7 +971,7 @@ type GetBookResponse struct {
 
 func (x *GetBookResponse) Reset() {
 	*x = GetBookResponse{}
-	mi := &file_library_proto_msgTypes[9]
+	mi := &file_library_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -874,7 +983,7 @@ func (x *GetBookResponse) String() string {
 func (*GetBookResponse) ProtoMessage() {}
 
 func (x *GetBookResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[9]
+	mi := &file_library_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -887,7 +996,7 @@ func (x *GetBookResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBookResponse.ProtoReflect.Descriptor instead.
 func (*GetBookResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{9}
+	return file_library_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetBookResponse) GetBooks() []*Book {
@@ -927,7 +1036,7 @@ type UpdateBookRequest struct {
 
 func (x *UpdateBookRequest) Reset() {
 	*x = UpdateBookRequest{}
-	mi := &file_library_proto_msgTypes[10]
+	mi := &file_library_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -939,7 +1048,7 @@ func (x *UpdateBookRequest) String() string {
 func (*UpdateBookRequest) ProtoMessage() {}
 
 func (x *UpdateBookRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[10]
+	mi := &file_library_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -952,7 +1061,7 @@ func (x *UpdateBookRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBookRequest.ProtoReflect.Descriptor instead.
 func (*UpdateBookRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{10}
+	return file_library_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *UpdateBookRequest) GetBookNo() string {
@@ -1015,7 +1124,7 @@ type UpdateBookResponse struct {
 
 func (x *UpdateBookResponse) Reset() {
 	*x = UpdateBookResponse{}
-	mi := &file_library_proto_msgTypes[11]
+	mi := &file_library_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1027,7 +1136,7 @@ func (x *UpdateBookResponse) String() string {
 func (*UpdateBookResponse) ProtoMessage() {}
 
 func (x *UpdateBookResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[11]
+	mi := &file_library_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1040,7 +1149,7 @@ func (x *UpdateBookResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBookResponse.ProtoReflect.Descriptor instead.
 func (*UpdateBookResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{11}
+	return file_library_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *UpdateBookResponse) GetSuccess() bool {
@@ -1067,7 +1176,7 @@ type DeleteBookRequest struct {
 
 func (x *DeleteBookRequest) Reset() {
 	*x = DeleteBookRequest{}
-	mi := &file_library_proto_msgTypes[12]
+	mi := &file_library_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1079,7 +1188,7 @@ func (x *DeleteBookRequest) String() string {
 func (*DeleteBookRequest) ProtoMessage() {}
 
 func (x *DeleteBookRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[12]
+	mi := &file_library_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1092,7 +1201,7 @@ func (x *DeleteBookRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteBookRequest.ProtoReflect.Descriptor instead.
 func (*DeleteBookRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{12}
+	return file_library_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *DeleteBookRequest) GetBookId() int32 {
@@ -1113,7 +1222,7 @@ type DeleteBookResponse struct {
 
 func (x *DeleteBookResponse) Reset() {
 	*x = DeleteBookResponse{}
-	mi := &file_library_proto_msgTypes[13]
+	mi := &file_library_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1125,7 +1234,7 @@ func (x *DeleteBookResponse) String() string {
 func (*DeleteBookResponse) ProtoMessage() {}
 
 func (x *DeleteBookResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[13]
+	mi := &file_library_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1138,7 +1247,7 @@ func (x *DeleteBookResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteBookResponse.ProtoReflect.Descriptor instead.
 func (*DeleteBookResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{13}
+	return file_library_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *DeleteBookResponse) GetSuccess() bool {
@@ -1171,7 +1280,7 @@ type CreateStockRequestRequest struct {
 
 func (x *CreateStockRequestRequest) Reset() {
 	*x = CreateStockRequestRequest{}
-	mi := &file_library_proto_msgTypes[14]
+	mi := &file_library_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1183,7 +1292,7 @@ func (x *CreateStockRequestRequest) String() string {
 func (*CreateStockRequestRequest) ProtoMessage() {}
 
 func (x *CreateStockRequestRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[14]
+	mi := &file_library_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1196,7 +1305,7 @@ func (x *CreateStockRequestRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateStockRequestRequest.ProtoReflect.Descriptor instead.
 func (*CreateStockRequestRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{14}
+	return file_library_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *CreateStockRequestRequest) GetBookNo() string {
@@ -1259,7 +1368,7 @@ type CreateStockRequestResponse struct {
 
 func (x *CreateStockRequestResponse) Reset() {
 	*x = CreateStockRequestResponse{}
-	mi := &file_library_proto_msgTypes[15]
+	mi := &file_library_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1271,7 +1380,7 @@ func (x *CreateStockRequestResponse) String() string {
 func (*CreateStockRequestResponse) ProtoMessage() {}
 
 func (x *CreateStockRequestResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[15]
+	mi := &file_library_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1284,7 +1393,7 @@ func (x *CreateStockRequestResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateStockRequestResponse.ProtoReflect.Descriptor instead.
 func (*CreateStockRequestResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{15}
+	return file_library_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *CreateStockRequestResponse) GetSuccess() bool {
@@ -1319,7 +1428,7 @@ type UpdateStockRequestRequest struct {
 
 func (x *UpdateStockRequestRequest) Reset() {
 	*x = UpdateStockRequestRequest{}
-	mi := &file_library_proto_msgTypes[16]
+	mi := &file_library_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1331,7 +1440,7 @@ func (x *UpdateStockRequestRequest) String() string {
 func (*UpdateStockRequestRequest) ProtoMessage() {}
 
 func (x *UpdateStockRequestRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[16]
+	mi := &file_library_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1344,7 +1453,7 @@ func (x *UpdateStockRequestRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateStockRequestRequest.ProtoReflect.Descriptor instead.
 func (*UpdateStockRequestRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{16}
+	return file_library_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *UpdateStockRequestRequest) GetBookNo() string {
@@ -1421,7 +1530,7 @@ type UpdateStockRequestResponse struct {
 
 func (x *UpdateStockRequestResponse) Reset() {
 	*x = UpdateStockRequestResponse{}
-	mi := &file_library_proto_msgTypes[17]
+	mi := &file_library_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1433,7 +1542,7 @@ func (x *UpdateStockRequestResponse) String() string {
 func (*UpdateStockRequestResponse) ProtoMessage() {}
 
 func (x *UpdateStockRequestResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[17]
+	mi := &file_library_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1446,7 +1555,7 @@ func (x *UpdateStockRequestResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateStockRequestResponse.ProtoReflect.Descriptor instead.
 func (*UpdateStockRequestResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{17}
+	return file_library_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *UpdateStockRequestResponse) GetSuccess() bool {
@@ -1479,7 +1588,7 @@ type CreatePurchaseOrderRequest struct {
 
 func (x *CreatePurchaseOrderRequest) Reset() {
 	*x = CreatePurchaseOrderRequest{}
-	mi := &file_library_proto_msgTypes[18]
+	mi := &file_library_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1491,7 +1600,7 @@ func (x *CreatePurchaseOrderRequest) String() string {
 func (*CreatePurchaseOrderRequest) ProtoMessage() {}
 
 func (x *CreatePurchaseOrderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[18]
+	mi := &file_library_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1504,7 +1613,7 @@ func (x *CreatePurchaseOrderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreatePurchaseOrderRequest.ProtoReflect.Descriptor instead.
 func (*CreatePurchaseOrderRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{18}
+	return file_library_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *CreatePurchaseOrderRequest) GetBookNo() string {
@@ -1567,7 +1676,7 @@ type CreatePurchaseOrderResponse struct {
 
 func (x *CreatePurchaseOrderResponse) Reset() {
 	*x = CreatePurchaseOrderResponse{}
-	mi := &file_library_proto_msgTypes[19]
+	mi := &file_library_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1579,7 +1688,7 @@ func (x *CreatePurchaseOrderResponse) String() string {
 func (*CreatePurchaseOrderResponse) ProtoMessage() {}
 
 func (x *CreatePurchaseOrderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[19]
+	mi := &file_library_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1592,7 +1701,7 @@ func (x *CreatePurchaseOrderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreatePurchaseOrderResponse.ProtoReflect.Descriptor instead.
 func (*CreatePurchaseOrderResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{19}
+	return file_library_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *CreatePurchaseOrderResponse) GetSuccess() bool {
@@ -1620,7 +1729,7 @@ type GetPurchaseOrderRequest struct {
 
 func (x *GetPurchaseOrderRequest) Reset() {
 	*x = GetPurchaseOrderRequest{}
-	mi := &file_library_proto_msgTypes[20]
+	mi := &file_library_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1632,7 +1741,7 @@ func (x *GetPurchaseOrderRequest) String() string {
 func (*GetPurchaseOrderRequest) ProtoMessage() {}
 
 func (x *GetPurchaseOrderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[20]
+	mi := &file_library_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1645,7 +1754,7 @@ func (x *GetPurchaseOrderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPurchaseOrderRequest.ProtoReflect.Descriptor instead.
 func (*GetPurchaseOrderRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{20}
+	return file_library_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GetPurchaseOrderRequest) GetStart() int32 {
@@ -1674,7 +1783,7 @@ type GetPurchaseOrderResponse struct {
 
 func (x *GetPurchaseOrderResponse) Reset() {
 	*x = GetPurchaseOrderResponse{}
-	mi := &file_library_proto_msgTypes[21]
+	mi := &file_library_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1686,7 +1795,7 @@ func (x *GetPurchaseOrderResponse) String() string {
 func (*GetPurchaseOrderResponse) ProtoMessage() {}
 
 func (x *GetPurchaseOrderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[21]
+	mi := &file_library_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1699,7 +1808,7 @@ func (x *GetPurchaseOrderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPurchaseOrderResponse.ProtoReflect.Descriptor instead.
 func (*GetPurchaseOrderResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{21}
+	return file_library_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GetPurchaseOrderResponse) GetSuccess() bool {
@@ -1741,7 +1850,7 @@ type UpdatePurchaseOrderRequest struct {
 
 func (x *UpdatePurchaseOrderRequest) Reset() {
 	*x = UpdatePurchaseOrderRequest{}
-	mi := &file_library_proto_msgTypes[22]
+	mi := &file_library_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1753,7 +1862,7 @@ func (x *UpdatePurchaseOrderRequest) String() string {
 func (*UpdatePurchaseOrderRequest) ProtoMessage() {}
 
 func (x *UpdatePurchaseOrderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[22]
+	mi := &file_library_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1766,7 +1875,7 @@ func (x *UpdatePurchaseOrderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePurchaseOrderRequest.ProtoReflect.Descriptor instead.
 func (*UpdatePurchaseOrderRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{22}
+	return file_library_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *UpdatePurchaseOrderRequest) GetId() int32 {
@@ -1843,7 +1952,7 @@ type UpdatePurchaseOrderResponse struct {
 
 func (x *UpdatePurchaseOrderResponse) Reset() {
 	*x = UpdatePurchaseOrderResponse{}
-	mi := &file_library_proto_msgTypes[23]
+	mi := &file_library_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1855,7 +1964,7 @@ func (x *UpdatePurchaseOrderResponse) String() string {
 func (*UpdatePurchaseOrderResponse) ProtoMessage() {}
 
 func (x *UpdatePurchaseOrderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[23]
+	mi := &file_library_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1868,7 +1977,7 @@ func (x *UpdatePurchaseOrderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePurchaseOrderResponse.ProtoReflect.Descriptor instead.
 func (*UpdatePurchaseOrderResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{23}
+	return file_library_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *UpdatePurchaseOrderResponse) GetSuccess() bool {
@@ -1895,7 +2004,7 @@ type DeletePurchaseOrderRequest struct {
 
 func (x *DeletePurchaseOrderRequest) Reset() {
 	*x = DeletePurchaseOrderRequest{}
-	mi := &file_library_proto_msgTypes[24]
+	mi := &file_library_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1907,7 +2016,7 @@ func (x *DeletePurchaseOrderRequest) String() string {
 func (*DeletePurchaseOrderRequest) ProtoMessage() {}
 
 func (x *DeletePurchaseOrderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[24]
+	mi := &file_library_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1920,7 +2029,7 @@ func (x *DeletePurchaseOrderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePurchaseOrderRequest.ProtoReflect.Descriptor instead.
 func (*DeletePurchaseOrderRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{24}
+	return file_library_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *DeletePurchaseOrderRequest) GetId() int32 {
@@ -1941,7 +2050,7 @@ type DeletePurchaseOrderResponse struct {
 
 func (x *DeletePurchaseOrderResponse) Reset() {
 	*x = DeletePurchaseOrderResponse{}
-	mi := &file_library_proto_msgTypes[25]
+	mi := &file_library_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1953,7 +2062,7 @@ func (x *DeletePurchaseOrderResponse) String() string {
 func (*DeletePurchaseOrderResponse) ProtoMessage() {}
 
 func (x *DeletePurchaseOrderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[25]
+	mi := &file_library_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1966,7 +2075,7 @@ func (x *DeletePurchaseOrderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePurchaseOrderResponse.ProtoReflect.Descriptor instead.
 func (*DeletePurchaseOrderResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{25}
+	return file_library_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *DeletePurchaseOrderResponse) GetSuccess() bool {
@@ -1992,7 +2101,7 @@ type GeneratePurchaseOrdersRequest struct {
 
 func (x *GeneratePurchaseOrdersRequest) Reset() {
 	*x = GeneratePurchaseOrdersRequest{}
-	mi := &file_library_proto_msgTypes[26]
+	mi := &file_library_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2004,7 +2113,7 @@ func (x *GeneratePurchaseOrdersRequest) String() string {
 func (*GeneratePurchaseOrdersRequest) ProtoMessage() {}
 
 func (x *GeneratePurchaseOrdersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[26]
+	mi := &file_library_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2017,7 +2126,7 @@ func (x *GeneratePurchaseOrdersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GeneratePurchaseOrdersRequest.ProtoReflect.Descriptor instead.
 func (*GeneratePurchaseOrdersRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{26}
+	return file_library_proto_rawDescGZIP(), []int{27}
 }
 
 // 生成采购单应答
@@ -2031,7 +2140,7 @@ type GeneratePurchaseOrdersResponse struct {
 
 func (x *GeneratePurchaseOrdersResponse) Reset() {
 	*x = GeneratePurchaseOrdersResponse{}
-	mi := &file_library_proto_msgTypes[27]
+	mi := &file_library_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2043,7 +2152,7 @@ func (x *GeneratePurchaseOrdersResponse) String() string {
 func (*GeneratePurchaseOrdersResponse) ProtoMessage() {}
 
 func (x *GeneratePurchaseOrdersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[27]
+	mi := &file_library_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2056,7 +2165,7 @@ func (x *GeneratePurchaseOrdersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GeneratePurchaseOrdersResponse.ProtoReflect.Descriptor instead.
 func (*GeneratePurchaseOrdersResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{27}
+	return file_library_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *GeneratePurchaseOrdersResponse) GetSuccess() bool {
@@ -2088,7 +2197,7 @@ type CreateCustomerRequest struct {
 
 func (x *CreateCustomerRequest) Reset() {
 	*x = CreateCustomerRequest{}
-	mi := &file_library_proto_msgTypes[28]
+	mi := &file_library_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2100,7 +2209,7 @@ func (x *CreateCustomerRequest) String() string {
 func (*CreateCustomerRequest) ProtoMessage() {}
 
 func (x *CreateCustomerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[28]
+	mi := &file_library_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2113,7 +2222,7 @@ func (x *CreateCustomerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateCustomerRequest.ProtoReflect.Descriptor instead.
 func (*CreateCustomerRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{28}
+	return file_library_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *CreateCustomerRequest) GetOnlineId() string {
@@ -2169,7 +2278,7 @@ type CreateCustomerResponse struct {
 
 func (x *CreateCustomerResponse) Reset() {
 	*x = CreateCustomerResponse{}
-	mi := &file_library_proto_msgTypes[29]
+	mi := &file_library_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2181,7 +2290,7 @@ func (x *CreateCustomerResponse) String() string {
 func (*CreateCustomerResponse) ProtoMessage() {}
 
 func (x *CreateCustomerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[29]
+	mi := &file_library_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2194,7 +2303,7 @@ func (x *CreateCustomerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateCustomerResponse.ProtoReflect.Descriptor instead.
 func (*CreateCustomerResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{29}
+	return file_library_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *CreateCustomerResponse) GetSuccess() bool {
@@ -2222,7 +2331,7 @@ type GetCustomerRequest struct {
 
 func (x *GetCustomerRequest) Reset() {
 	*x = GetCustomerRequest{}
-	mi := &file_library_proto_msgTypes[30]
+	mi := &file_library_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2234,7 +2343,7 @@ func (x *GetCustomerRequest) String() string {
 func (*GetCustomerRequest) ProtoMessage() {}
 
 func (x *GetCustomerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[30]
+	mi := &file_library_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2247,7 +2356,7 @@ func (x *GetCustomerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomerRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomerRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{30}
+	return file_library_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *GetCustomerRequest) GetStart() int32 {
@@ -2276,7 +2385,7 @@ type GetCustomerResponse struct {
 
 func (x *GetCustomerResponse) Reset() {
 	*x = GetCustomerResponse{}
-	mi := &file_library_proto_msgTypes[31]
+	mi := &file_library_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2288,7 +2397,7 @@ func (x *GetCustomerResponse) String() string {
 func (*GetCustomerResponse) ProtoMessage() {}
 
 func (x *GetCustomerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[31]
+	mi := &file_library_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2301,7 +2410,7 @@ func (x *GetCustomerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomerResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomerResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{31}
+	return file_library_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *GetCustomerResponse) GetSuccess() bool {
@@ -2341,7 +2450,7 @@ type UpdateCustomerRequest struct {
 
 func (x *UpdateCustomerRequest) Reset() {
 	*x = UpdateCustomerRequest{}
-	mi := &file_library_proto_msgTypes[32]
+	mi := &file_library_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2353,7 +2462,7 @@ func (x *UpdateCustomerRequest) String() string {
 func (*UpdateCustomerRequest) ProtoMessage() {}
 
 func (x *UpdateCustomerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[32]
+	mi := &file_library_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2366,7 +2475,7 @@ func (x *UpdateCustomerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCustomerRequest.ProtoReflect.Descriptor instead.
 func (*UpdateCustomerRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{32}
+	return file_library_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *UpdateCustomerRequest) GetId() int32 {
@@ -2429,7 +2538,7 @@ type UpdateCustomerResponse struct {
 
 func (x *UpdateCustomerResponse) Reset() {
 	*x = UpdateCustomerResponse{}
-	mi := &file_library_proto_msgTypes[33]
+	mi := &file_library_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2441,7 +2550,7 @@ func (x *UpdateCustomerResponse) String() string {
 func (*UpdateCustomerResponse) ProtoMessage() {}
 
 func (x *UpdateCustomerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[33]
+	mi := &file_library_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2454,7 +2563,7 @@ func (x *UpdateCustomerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCustomerResponse.ProtoReflect.Descriptor instead.
 func (*UpdateCustomerResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{33}
+	return file_library_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *UpdateCustomerResponse) GetSuccess() bool {
@@ -2481,7 +2590,7 @@ type DeleteCustomerRequest struct {
 
 func (x *DeleteCustomerRequest) Reset() {
 	*x = DeleteCustomerRequest{}
-	mi := &file_library_proto_msgTypes[34]
+	mi := &file_library_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2493,7 +2602,7 @@ func (x *DeleteCustomerRequest) String() string {
 func (*DeleteCustomerRequest) ProtoMessage() {}
 
 func (x *DeleteCustomerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[34]
+	mi := &file_library_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2506,7 +2615,7 @@ func (x *DeleteCustomerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteCustomerRequest.ProtoReflect.Descriptor instead.
 func (*DeleteCustomerRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{34}
+	return file_library_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *DeleteCustomerRequest) GetId() int32 {
@@ -2527,7 +2636,7 @@ type DeleteCustomerResponse struct {
 
 func (x *DeleteCustomerResponse) Reset() {
 	*x = DeleteCustomerResponse{}
-	mi := &file_library_proto_msgTypes[35]
+	mi := &file_library_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2539,7 +2648,7 @@ func (x *DeleteCustomerResponse) String() string {
 func (*DeleteCustomerResponse) ProtoMessage() {}
 
 func (x *DeleteCustomerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[35]
+	mi := &file_library_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2552,7 +2661,7 @@ func (x *DeleteCustomerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteCustomerResponse.ProtoReflect.Descriptor instead.
 func (*DeleteCustomerResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{35}
+	return file_library_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *DeleteCustomerResponse) GetSuccess() bool {
@@ -2569,30 +2678,36 @@ func (x *DeleteCustomerResponse) GetFeedback() string {
 	return ""
 }
 
-// 更新信用等级请求
-type UpdateCreditLevelRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    int32                  `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	CreditLevelId int32                  `protobuf:"varint,2,opt,name=credit_level_id,json=creditLevelId,proto3" json:"credit_level_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+// 创建客户订单请求
+type CreateCustomerOrderRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	OrderDate        string                 `protobuf:"bytes,1,opt,name=order_date,json=orderDate,proto3" json:"order_date,omitempty"`
+	CustomerId       int32                  `protobuf:"varint,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerOnlineId string                 `protobuf:"bytes,3,opt,name=customer_online_id,json=customerOnlineId,proto3" json:"customer_online_id,omitempty"`
+	BookNo           string                 `protobuf:"bytes,4,opt,name=book_no,json=bookNo,proto3" json:"book_no,omitempty"`
+	BookCount        int32                  `protobuf:"varint,5,opt,name=book_count,json=bookCount,proto3" json:"book_count,omitempty"`
+	Price            int32                  `protobuf:"varint,6,opt,name=price,proto3" json:"price,omitempty"`
+	Address          string                 `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
+	Status           string                 `protobuf:"bytes,8,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
-func (x *UpdateCreditLevelRequest) Reset() {
-	*x = UpdateCreditLevelRequest{}
-	mi := &file_library_proto_msgTypes[36]
+func (x *CreateCustomerOrderRequest) Reset() {
+	*x = CreateCustomerOrderRequest{}
+	mi := &file_library_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpdateCreditLevelRequest) String() string {
+func (x *CreateCustomerOrderRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateCreditLevelRequest) ProtoMessage() {}
+func (*CreateCustomerOrderRequest) ProtoMessage() {}
 
-func (x *UpdateCreditLevelRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[36]
+func (x *CreateCustomerOrderRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_library_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2603,48 +2718,91 @@ func (x *UpdateCreditLevelRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateCreditLevelRequest.ProtoReflect.Descriptor instead.
-func (*UpdateCreditLevelRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{36}
+// Deprecated: Use CreateCustomerOrderRequest.ProtoReflect.Descriptor instead.
+func (*CreateCustomerOrderRequest) Descriptor() ([]byte, []int) {
+	return file_library_proto_rawDescGZIP(), []int{37}
 }
 
-func (x *UpdateCreditLevelRequest) GetCustomerId() int32 {
+func (x *CreateCustomerOrderRequest) GetOrderDate() string {
+	if x != nil {
+		return x.OrderDate
+	}
+	return ""
+}
+
+func (x *CreateCustomerOrderRequest) GetCustomerId() int32 {
 	if x != nil {
 		return x.CustomerId
 	}
 	return 0
 }
 
-func (x *UpdateCreditLevelRequest) GetCreditLevelId() int32 {
+func (x *CreateCustomerOrderRequest) GetCustomerOnlineId() string {
 	if x != nil {
-		return x.CreditLevelId
+		return x.CustomerOnlineId
+	}
+	return ""
+}
+
+func (x *CreateCustomerOrderRequest) GetBookNo() string {
+	if x != nil {
+		return x.BookNo
+	}
+	return ""
+}
+
+func (x *CreateCustomerOrderRequest) GetBookCount() int32 {
+	if x != nil {
+		return x.BookCount
 	}
 	return 0
 }
 
-// 更新信用等级应答
-type UpdateCreditLevelResponse struct {
+func (x *CreateCustomerOrderRequest) GetPrice() int32 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *CreateCustomerOrderRequest) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *CreateCustomerOrderRequest) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+// 创建客户订单应答
+type CreateCustomerOrderResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Feedback      string                 `protobuf:"bytes,2,opt,name=feedback,proto3" json:"feedback,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UpdateCreditLevelResponse) Reset() {
-	*x = UpdateCreditLevelResponse{}
-	mi := &file_library_proto_msgTypes[37]
+func (x *CreateCustomerOrderResponse) Reset() {
+	*x = CreateCustomerOrderResponse{}
+	mi := &file_library_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpdateCreditLevelResponse) String() string {
+func (x *CreateCustomerOrderResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateCreditLevelResponse) ProtoMessage() {}
+func (*CreateCustomerOrderResponse) ProtoMessage() {}
 
-func (x *UpdateCreditLevelResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[37]
+func (x *CreateCustomerOrderResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_library_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2655,41 +2813,49 @@ func (x *UpdateCreditLevelResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateCreditLevelResponse.ProtoReflect.Descriptor instead.
-func (*UpdateCreditLevelResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{37}
+// Deprecated: Use CreateCustomerOrderResponse.ProtoReflect.Descriptor instead.
+func (*CreateCustomerOrderResponse) Descriptor() ([]byte, []int) {
+	return file_library_proto_rawDescGZIP(), []int{38}
 }
 
-func (x *UpdateCreditLevelResponse) GetSuccess() bool {
+func (x *CreateCustomerOrderResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-// 列出客户请求
-type ListCustomersByCreditLevelRequest struct {
+func (x *CreateCustomerOrderResponse) GetFeedback() string {
+	if x != nil {
+		return x.Feedback
+	}
+	return ""
+}
+
+// 获取客户订单请求
+type GetCustomerOrderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CreditLevelId int32                  `protobuf:"varint,1,opt,name=credit_level_id,json=creditLevelId,proto3" json:"credit_level_id,omitempty"`
+	Start         int32                  `protobuf:"varint,1,opt,name=start,proto3" json:"start,omitempty"`
+	Stop          int32                  `protobuf:"varint,2,opt,name=stop,proto3" json:"stop,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListCustomersByCreditLevelRequest) Reset() {
-	*x = ListCustomersByCreditLevelRequest{}
-	mi := &file_library_proto_msgTypes[38]
+func (x *GetCustomerOrderRequest) Reset() {
+	*x = GetCustomerOrderRequest{}
+	mi := &file_library_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListCustomersByCreditLevelRequest) String() string {
+func (x *GetCustomerOrderRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListCustomersByCreditLevelRequest) ProtoMessage() {}
+func (*GetCustomerOrderRequest) ProtoMessage() {}
 
-func (x *ListCustomersByCreditLevelRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[38]
+func (x *GetCustomerOrderRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_library_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2700,41 +2866,50 @@ func (x *ListCustomersByCreditLevelRequest) ProtoReflect() protoreflect.Message 
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListCustomersByCreditLevelRequest.ProtoReflect.Descriptor instead.
-func (*ListCustomersByCreditLevelRequest) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{38}
+// Deprecated: Use GetCustomerOrderRequest.ProtoReflect.Descriptor instead.
+func (*GetCustomerOrderRequest) Descriptor() ([]byte, []int) {
+	return file_library_proto_rawDescGZIP(), []int{39}
 }
 
-func (x *ListCustomersByCreditLevelRequest) GetCreditLevelId() int32 {
+func (x *GetCustomerOrderRequest) GetStart() int32 {
 	if x != nil {
-		return x.CreditLevelId
+		return x.Start
 	}
 	return 0
 }
 
-// 列出客户应答
-type ListCustomersByCreditLevelResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Customers     []*Customer            `protobuf:"bytes,1,rep,name=customers,proto3" json:"customers,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+func (x *GetCustomerOrderRequest) GetStop() int32 {
+	if x != nil {
+		return x.Stop
+	}
+	return 0
 }
 
-func (x *ListCustomersByCreditLevelResponse) Reset() {
-	*x = ListCustomersByCreditLevelResponse{}
-	mi := &file_library_proto_msgTypes[39]
+// 获取客户订单应答
+type GetCustomerOrderResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Success        bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Feedback       string                 `protobuf:"bytes,2,opt,name=feedback,proto3" json:"feedback,omitempty"`
+	CustomerOrders []*CustomerOrder       `protobuf:"bytes,3,rep,name=customer_orders,json=customerOrders,proto3" json:"customer_orders,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetCustomerOrderResponse) Reset() {
+	*x = GetCustomerOrderResponse{}
+	mi := &file_library_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListCustomersByCreditLevelResponse) String() string {
+func (x *GetCustomerOrderResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListCustomersByCreditLevelResponse) ProtoMessage() {}
+func (*GetCustomerOrderResponse) ProtoMessage() {}
 
-func (x *ListCustomersByCreditLevelResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_library_proto_msgTypes[39]
+func (x *GetCustomerOrderResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_library_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2745,16 +2920,290 @@ func (x *ListCustomersByCreditLevelResponse) ProtoReflect() protoreflect.Message
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListCustomersByCreditLevelResponse.ProtoReflect.Descriptor instead.
-func (*ListCustomersByCreditLevelResponse) Descriptor() ([]byte, []int) {
-	return file_library_proto_rawDescGZIP(), []int{39}
+// Deprecated: Use GetCustomerOrderResponse.ProtoReflect.Descriptor instead.
+func (*GetCustomerOrderResponse) Descriptor() ([]byte, []int) {
+	return file_library_proto_rawDescGZIP(), []int{40}
 }
 
-func (x *ListCustomersByCreditLevelResponse) GetCustomers() []*Customer {
+func (x *GetCustomerOrderResponse) GetSuccess() bool {
 	if x != nil {
-		return x.Customers
+		return x.Success
+	}
+	return false
+}
+
+func (x *GetCustomerOrderResponse) GetFeedback() string {
+	if x != nil {
+		return x.Feedback
+	}
+	return ""
+}
+
+func (x *GetCustomerOrderResponse) GetCustomerOrders() []*CustomerOrder {
+	if x != nil {
+		return x.CustomerOrders
 	}
 	return nil
+}
+
+// 更新客户订单请求
+type UpdateCustomerOrderRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Id               int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	OrderDate        string                 `protobuf:"bytes,2,opt,name=order_date,json=orderDate,proto3" json:"order_date,omitempty"`
+	CustomerId       int32                  `protobuf:"varint,3,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerOnlineId string                 `protobuf:"bytes,4,opt,name=customer_online_id,json=customerOnlineId,proto3" json:"customer_online_id,omitempty"`
+	BookNo           string                 `protobuf:"bytes,5,opt,name=book_no,json=bookNo,proto3" json:"book_no,omitempty"`
+	BookCount        int32                  `protobuf:"varint,6,opt,name=book_count,json=bookCount,proto3" json:"book_count,omitempty"`
+	Price            int32                  `protobuf:"varint,7,opt,name=price,proto3" json:"price,omitempty"`
+	Address          string                 `protobuf:"bytes,8,opt,name=address,proto3" json:"address,omitempty"`
+	Status           string                 `protobuf:"bytes,9,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *UpdateCustomerOrderRequest) Reset() {
+	*x = UpdateCustomerOrderRequest{}
+	mi := &file_library_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateCustomerOrderRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateCustomerOrderRequest) ProtoMessage() {}
+
+func (x *UpdateCustomerOrderRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_library_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateCustomerOrderRequest.ProtoReflect.Descriptor instead.
+func (*UpdateCustomerOrderRequest) Descriptor() ([]byte, []int) {
+	return file_library_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *UpdateCustomerOrderRequest) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateCustomerOrderRequest) GetOrderDate() string {
+	if x != nil {
+		return x.OrderDate
+	}
+	return ""
+}
+
+func (x *UpdateCustomerOrderRequest) GetCustomerId() int32 {
+	if x != nil {
+		return x.CustomerId
+	}
+	return 0
+}
+
+func (x *UpdateCustomerOrderRequest) GetCustomerOnlineId() string {
+	if x != nil {
+		return x.CustomerOnlineId
+	}
+	return ""
+}
+
+func (x *UpdateCustomerOrderRequest) GetBookNo() string {
+	if x != nil {
+		return x.BookNo
+	}
+	return ""
+}
+
+func (x *UpdateCustomerOrderRequest) GetBookCount() int32 {
+	if x != nil {
+		return x.BookCount
+	}
+	return 0
+}
+
+func (x *UpdateCustomerOrderRequest) GetPrice() int32 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *UpdateCustomerOrderRequest) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *UpdateCustomerOrderRequest) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+// 更新客户订单应答
+type UpdateCustomerOrderResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Feedback      string                 `protobuf:"bytes,2,opt,name=feedback,proto3" json:"feedback,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateCustomerOrderResponse) Reset() {
+	*x = UpdateCustomerOrderResponse{}
+	mi := &file_library_proto_msgTypes[42]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateCustomerOrderResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateCustomerOrderResponse) ProtoMessage() {}
+
+func (x *UpdateCustomerOrderResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_library_proto_msgTypes[42]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateCustomerOrderResponse.ProtoReflect.Descriptor instead.
+func (*UpdateCustomerOrderResponse) Descriptor() ([]byte, []int) {
+	return file_library_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *UpdateCustomerOrderResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *UpdateCustomerOrderResponse) GetFeedback() string {
+	if x != nil {
+		return x.Feedback
+	}
+	return ""
+}
+
+// 删除客户订单请求
+type DeleteCustomerOrderRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteCustomerOrderRequest) Reset() {
+	*x = DeleteCustomerOrderRequest{}
+	mi := &file_library_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteCustomerOrderRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteCustomerOrderRequest) ProtoMessage() {}
+
+func (x *DeleteCustomerOrderRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_library_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteCustomerOrderRequest.ProtoReflect.Descriptor instead.
+func (*DeleteCustomerOrderRequest) Descriptor() ([]byte, []int) {
+	return file_library_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *DeleteCustomerOrderRequest) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 删除客户订单应答
+type DeleteCustomerOrderResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Feedback      string                 `protobuf:"bytes,2,opt,name=feedback,proto3" json:"feedback,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteCustomerOrderResponse) Reset() {
+	*x = DeleteCustomerOrderResponse{}
+	mi := &file_library_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteCustomerOrderResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteCustomerOrderResponse) ProtoMessage() {}
+
+func (x *DeleteCustomerOrderResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_library_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteCustomerOrderResponse.ProtoReflect.Descriptor instead.
+func (*DeleteCustomerOrderResponse) Descriptor() ([]byte, []int) {
+	return file_library_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *DeleteCustomerOrderResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteCustomerOrderResponse) GetFeedback() string {
+	if x != nil {
+		return x.Feedback
+	}
+	return ""
 }
 
 var File_library_proto protoreflect.FileDescriptor
@@ -2876,7 +3325,24 @@ var file_library_proto_rawDesc = []byte{
 	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69,
 	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64,
 	0x41, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x18, 0x0b,
-	0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x22, 0xdc,
+	0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x22, 0x8d,
+	0x02, 0x0a, 0x0d, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x69, 0x64,
+	0x12, 0x1d, 0x0a, 0x0a, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x44, 0x61, 0x74, 0x65, 0x12,
+	0x1f, 0x0a, 0x0b, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x49, 0x64,
+	0x12, 0x2c, 0x0a, 0x12, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x6f, 0x6e, 0x6c,
+	0x69, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x10, 0x63, 0x75,
+	0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x6e, 0x6c, 0x69, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x17,
+	0x0a, 0x07, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x6e, 0x6f, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x62, 0x6f, 0x6f, 0x6b, 0x4e, 0x6f, 0x12, 0x1d, 0x0a, 0x0a, 0x62, 0x6f, 0x6f, 0x6b, 0x5f,
+	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x62, 0x6f, 0x6f,
+	0x6b, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18,
+	0x07, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x18, 0x0a, 0x07,
+	0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0xdc,
 	0x01, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x42, 0x6f, 0x6f, 0x6b, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x6e, 0x6f, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x6f, 0x6f, 0x6b, 0x4e, 0x6f, 0x12, 0x14, 0x0a,
@@ -3100,27 +3566,74 @@ var file_library_proto_rawDesc = []byte{
 	0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63,
 	0x63, 0x65, 0x73, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61, 0x63, 0x6b,
 	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61, 0x63, 0x6b,
-	0x22, 0x63, 0x0a, 0x18, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74,
-	0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1f, 0x0a, 0x0b,
-	0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x0a, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x49, 0x64, 0x12, 0x26, 0x0a,
-	0x0f, 0x63, 0x72, 0x65, 0x64, 0x69, 0x74, 0x5f, 0x6c, 0x65, 0x76, 0x65, 0x6c, 0x5f, 0x69, 0x64,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x63, 0x72, 0x65, 0x64, 0x69, 0x74, 0x4c, 0x65,
-	0x76, 0x65, 0x6c, 0x49, 0x64, 0x22, 0x35, 0x0a, 0x19, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43,
-	0x72, 0x65, 0x64, 0x69, 0x74, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x4b, 0x0a, 0x21,
-	0x4c, 0x69, 0x73, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x73, 0x42, 0x79, 0x43,
-	0x72, 0x65, 0x64, 0x69, 0x74, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x26, 0x0a, 0x0f, 0x63, 0x72, 0x65, 0x64, 0x69, 0x74, 0x5f, 0x6c, 0x65, 0x76, 0x65,
-	0x6c, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x63, 0x72, 0x65, 0x64,
-	0x69, 0x74, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x49, 0x64, 0x22, 0x57, 0x0a, 0x22, 0x4c, 0x69, 0x73,
-	0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x73, 0x42, 0x79, 0x43, 0x72, 0x65, 0x64,
-	0x69, 0x74, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x31, 0x0a, 0x09, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03,
-	0x28, 0x0b, 0x32, 0x13, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x43,
-	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x52, 0x09, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65,
-	0x72, 0x73, 0x32, 0xb0, 0x02, 0x0a, 0x0b, 0x42, 0x6f, 0x6f, 0x6b, 0x53, 0x65, 0x72, 0x76, 0x69,
+	0x22, 0x8a, 0x02, 0x0a, 0x1a, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f,
+	0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x1d, 0x0a, 0x0a, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x44, 0x61, 0x74, 0x65, 0x12, 0x1f,
+	0x0a, 0x0b, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x0a, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x49, 0x64, 0x12,
+	0x2c, 0x0a, 0x12, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x6f, 0x6e, 0x6c, 0x69,
+	0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x10, 0x63, 0x75, 0x73,
+	0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x6e, 0x6c, 0x69, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x17, 0x0a,
+	0x07, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x6e, 0x6f, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x62, 0x6f, 0x6f, 0x6b, 0x4e, 0x6f, 0x12, 0x1d, 0x0a, 0x0a, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x63,
+	0x6f, 0x75, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x62, 0x6f, 0x6f, 0x6b,
+	0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18,
+	0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x53, 0x0a,
+	0x1b, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07,
+	0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73,
+	0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61,
+	0x63, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61,
+	0x63, 0x6b, 0x22, 0x43, 0x0a, 0x17, 0x47, 0x65, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65,
+	0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a,
+	0x05, 0x73, 0x74, 0x61, 0x72, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x73, 0x74,
+	0x61, 0x72, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x74, 0x6f, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x73, 0x74, 0x6f, 0x70, 0x22, 0x93, 0x01, 0x0a, 0x18, 0x47, 0x65, 0x74, 0x43,
+	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x12, 0x1a,
+	0x0a, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61, 0x63, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61, 0x63, 0x6b, 0x12, 0x41, 0x0a, 0x0f, 0x63, 0x75,
+	0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x18, 0x03, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e,
+	0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x0e, 0x63,
+	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x22, 0x9a, 0x02,
+	0x0a, 0x1a, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1d, 0x0a, 0x0a,
+	0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x44, 0x61, 0x74, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x63,
+	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x0a, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x49, 0x64, 0x12, 0x2c, 0x0a, 0x12,
+	0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x5f, 0x6f, 0x6e, 0x6c, 0x69, 0x6e, 0x65, 0x5f,
+	0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x10, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d,
+	0x65, 0x72, 0x4f, 0x6e, 0x6c, 0x69, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x62, 0x6f,
+	0x6f, 0x6b, 0x5f, 0x6e, 0x6f, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x6f, 0x6f,
+	0x6b, 0x4e, 0x6f, 0x12, 0x1d, 0x0a, 0x0a, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x62, 0x6f, 0x6f, 0x6b, 0x43, 0x6f, 0x75,
+	0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65,
+	0x73, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x09, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x53, 0x0a, 0x1b, 0x55, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65,
+	0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63,
+	0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63,
+	0x65, 0x73, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61, 0x63, 0x6b, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61, 0x63, 0x6b, 0x22,
+	0x2c, 0x0a, 0x1a, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65,
+	0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a,
+	0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x69, 0x64, 0x22, 0x53, 0x0a,
+	0x1b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07,
+	0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73,
+	0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61,
+	0x63, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x65, 0x65, 0x64, 0x62, 0x61,
+	0x63, 0x6b, 0x32, 0xb0, 0x02, 0x0a, 0x0b, 0x42, 0x6f, 0x6f, 0x6b, 0x53, 0x65, 0x72, 0x76, 0x69,
 	0x63, 0x65, 0x12, 0x49, 0x0a, 0x0a, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x42, 0x6f, 0x6f, 0x6b,
 	0x12, 0x1c, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x43, 0x72, 0x65,
 	0x61, 0x74, 0x65, 0x42, 0x6f, 0x6f, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d,
@@ -3210,23 +3723,35 @@ var file_library_proto_rawDesc = []byte{
 	0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
 	0x21, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x44, 0x65, 0x6c, 0x65,
 	0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x32, 0xef, 0x01, 0x0a, 0x12, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x4c, 0x65, 0x76,
-	0x65, 0x6c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x5e, 0x0a, 0x11, 0x55, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x23,
-	0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x4c, 0x65, 0x76, 0x65,
-	0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x79, 0x0a, 0x1a, 0x4c, 0x69, 0x73,
-	0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x73, 0x42, 0x79, 0x43, 0x72, 0x65, 0x64,
-	0x69, 0x74, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x2c, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74,
-	0x6f, 0x72, 0x65, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72,
-	0x73, 0x42, 0x79, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2d, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72,
-	0x65, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x73, 0x42,
-	0x79, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0f, 0x5a, 0x0d, 0x2e, 0x2f, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74,
-	0x6f, 0x72, 0x65, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x65, 0x32, 0xa5, 0x03, 0x0a, 0x14, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x64, 0x0a, 0x13, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x12, 0x25, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x26, 0x2e, 0x62, 0x6f, 0x6f, 0x6b,
+	0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74,
+	0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x5b, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x22, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72,
+	0x65, 0x2e, 0x47, 0x65, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e, 0x62, 0x6f, 0x6f, 0x6b,
+	0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x47, 0x65, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65,
+	0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x64,
+	0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x25, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72,
+	0x65, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x26, 0x2e, 0x62,
+	0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43,
+	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x64, 0x0a, 0x13, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x75,
+	0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x25, 0x2e, 0x62, 0x6f,
+	0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x75,
+	0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x26, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0f, 0x5a, 0x0d, 0x2e, 0x2f,
+	0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3241,103 +3766,112 @@ func file_library_proto_rawDescGZIP() []byte {
 	return file_library_proto_rawDescData
 }
 
-var file_library_proto_msgTypes = make([]protoimpl.MessageInfo, 40)
+var file_library_proto_msgTypes = make([]protoimpl.MessageInfo, 45)
 var file_library_proto_goTypes = []any{
-	(*Publisher)(nil),                          // 0: bookstore.Publisher
-	(*Series)(nil),                             // 1: bookstore.Series
-	(*Book)(nil),                               // 2: bookstore.Book
-	(*Customer)(nil),                           // 3: bookstore.Customer
-	(*StockRequest)(nil),                       // 4: bookstore.StockRequest
-	(*PurchaseOrder)(nil),                      // 5: bookstore.PurchaseOrder
-	(*CreateBookRequest)(nil),                  // 6: bookstore.CreateBookRequest
-	(*CreateBookResponse)(nil),                 // 7: bookstore.CreateBookResponse
-	(*GetBookRequest)(nil),                     // 8: bookstore.GetBookRequest
-	(*GetBookResponse)(nil),                    // 9: bookstore.GetBookResponse
-	(*UpdateBookRequest)(nil),                  // 10: bookstore.UpdateBookRequest
-	(*UpdateBookResponse)(nil),                 // 11: bookstore.UpdateBookResponse
-	(*DeleteBookRequest)(nil),                  // 12: bookstore.DeleteBookRequest
-	(*DeleteBookResponse)(nil),                 // 13: bookstore.DeleteBookResponse
-	(*CreateStockRequestRequest)(nil),          // 14: bookstore.CreateStockRequestRequest
-	(*CreateStockRequestResponse)(nil),         // 15: bookstore.CreateStockRequestResponse
-	(*UpdateStockRequestRequest)(nil),          // 16: bookstore.UpdateStockRequestRequest
-	(*UpdateStockRequestResponse)(nil),         // 17: bookstore.UpdateStockRequestResponse
-	(*CreatePurchaseOrderRequest)(nil),         // 18: bookstore.CreatePurchaseOrderRequest
-	(*CreatePurchaseOrderResponse)(nil),        // 19: bookstore.CreatePurchaseOrderResponse
-	(*GetPurchaseOrderRequest)(nil),            // 20: bookstore.GetPurchaseOrderRequest
-	(*GetPurchaseOrderResponse)(nil),           // 21: bookstore.GetPurchaseOrderResponse
-	(*UpdatePurchaseOrderRequest)(nil),         // 22: bookstore.UpdatePurchaseOrderRequest
-	(*UpdatePurchaseOrderResponse)(nil),        // 23: bookstore.UpdatePurchaseOrderResponse
-	(*DeletePurchaseOrderRequest)(nil),         // 24: bookstore.DeletePurchaseOrderRequest
-	(*DeletePurchaseOrderResponse)(nil),        // 25: bookstore.DeletePurchaseOrderResponse
-	(*GeneratePurchaseOrdersRequest)(nil),      // 26: bookstore.GeneratePurchaseOrdersRequest
-	(*GeneratePurchaseOrdersResponse)(nil),     // 27: bookstore.GeneratePurchaseOrdersResponse
-	(*CreateCustomerRequest)(nil),              // 28: bookstore.CreateCustomerRequest
-	(*CreateCustomerResponse)(nil),             // 29: bookstore.CreateCustomerResponse
-	(*GetCustomerRequest)(nil),                 // 30: bookstore.GetCustomerRequest
-	(*GetCustomerResponse)(nil),                // 31: bookstore.GetCustomerResponse
-	(*UpdateCustomerRequest)(nil),              // 32: bookstore.UpdateCustomerRequest
-	(*UpdateCustomerResponse)(nil),             // 33: bookstore.UpdateCustomerResponse
-	(*DeleteCustomerRequest)(nil),              // 34: bookstore.DeleteCustomerRequest
-	(*DeleteCustomerResponse)(nil),             // 35: bookstore.DeleteCustomerResponse
-	(*UpdateCreditLevelRequest)(nil),           // 36: bookstore.UpdateCreditLevelRequest
-	(*UpdateCreditLevelResponse)(nil),          // 37: bookstore.UpdateCreditLevelResponse
-	(*ListCustomersByCreditLevelRequest)(nil),  // 38: bookstore.ListCustomersByCreditLevelRequest
-	(*ListCustomersByCreditLevelResponse)(nil), // 39: bookstore.ListCustomersByCreditLevelResponse
-	(*timestamppb.Timestamp)(nil),              // 40: google.protobuf.Timestamp
+	(*Publisher)(nil),                      // 0: bookstore.Publisher
+	(*Series)(nil),                         // 1: bookstore.Series
+	(*Book)(nil),                           // 2: bookstore.Book
+	(*Customer)(nil),                       // 3: bookstore.Customer
+	(*StockRequest)(nil),                   // 4: bookstore.StockRequest
+	(*PurchaseOrder)(nil),                  // 5: bookstore.PurchaseOrder
+	(*CustomerOrder)(nil),                  // 6: bookstore.CustomerOrder
+	(*CreateBookRequest)(nil),              // 7: bookstore.CreateBookRequest
+	(*CreateBookResponse)(nil),             // 8: bookstore.CreateBookResponse
+	(*GetBookRequest)(nil),                 // 9: bookstore.GetBookRequest
+	(*GetBookResponse)(nil),                // 10: bookstore.GetBookResponse
+	(*UpdateBookRequest)(nil),              // 11: bookstore.UpdateBookRequest
+	(*UpdateBookResponse)(nil),             // 12: bookstore.UpdateBookResponse
+	(*DeleteBookRequest)(nil),              // 13: bookstore.DeleteBookRequest
+	(*DeleteBookResponse)(nil),             // 14: bookstore.DeleteBookResponse
+	(*CreateStockRequestRequest)(nil),      // 15: bookstore.CreateStockRequestRequest
+	(*CreateStockRequestResponse)(nil),     // 16: bookstore.CreateStockRequestResponse
+	(*UpdateStockRequestRequest)(nil),      // 17: bookstore.UpdateStockRequestRequest
+	(*UpdateStockRequestResponse)(nil),     // 18: bookstore.UpdateStockRequestResponse
+	(*CreatePurchaseOrderRequest)(nil),     // 19: bookstore.CreatePurchaseOrderRequest
+	(*CreatePurchaseOrderResponse)(nil),    // 20: bookstore.CreatePurchaseOrderResponse
+	(*GetPurchaseOrderRequest)(nil),        // 21: bookstore.GetPurchaseOrderRequest
+	(*GetPurchaseOrderResponse)(nil),       // 22: bookstore.GetPurchaseOrderResponse
+	(*UpdatePurchaseOrderRequest)(nil),     // 23: bookstore.UpdatePurchaseOrderRequest
+	(*UpdatePurchaseOrderResponse)(nil),    // 24: bookstore.UpdatePurchaseOrderResponse
+	(*DeletePurchaseOrderRequest)(nil),     // 25: bookstore.DeletePurchaseOrderRequest
+	(*DeletePurchaseOrderResponse)(nil),    // 26: bookstore.DeletePurchaseOrderResponse
+	(*GeneratePurchaseOrdersRequest)(nil),  // 27: bookstore.GeneratePurchaseOrdersRequest
+	(*GeneratePurchaseOrdersResponse)(nil), // 28: bookstore.GeneratePurchaseOrdersResponse
+	(*CreateCustomerRequest)(nil),          // 29: bookstore.CreateCustomerRequest
+	(*CreateCustomerResponse)(nil),         // 30: bookstore.CreateCustomerResponse
+	(*GetCustomerRequest)(nil),             // 31: bookstore.GetCustomerRequest
+	(*GetCustomerResponse)(nil),            // 32: bookstore.GetCustomerResponse
+	(*UpdateCustomerRequest)(nil),          // 33: bookstore.UpdateCustomerRequest
+	(*UpdateCustomerResponse)(nil),         // 34: bookstore.UpdateCustomerResponse
+	(*DeleteCustomerRequest)(nil),          // 35: bookstore.DeleteCustomerRequest
+	(*DeleteCustomerResponse)(nil),         // 36: bookstore.DeleteCustomerResponse
+	(*CreateCustomerOrderRequest)(nil),     // 37: bookstore.CreateCustomerOrderRequest
+	(*CreateCustomerOrderResponse)(nil),    // 38: bookstore.CreateCustomerOrderResponse
+	(*GetCustomerOrderRequest)(nil),        // 39: bookstore.GetCustomerOrderRequest
+	(*GetCustomerOrderResponse)(nil),       // 40: bookstore.GetCustomerOrderResponse
+	(*UpdateCustomerOrderRequest)(nil),     // 41: bookstore.UpdateCustomerOrderRequest
+	(*UpdateCustomerOrderResponse)(nil),    // 42: bookstore.UpdateCustomerOrderResponse
+	(*DeleteCustomerOrderRequest)(nil),     // 43: bookstore.DeleteCustomerOrderRequest
+	(*DeleteCustomerOrderResponse)(nil),    // 44: bookstore.DeleteCustomerOrderResponse
+	(*timestamppb.Timestamp)(nil),          // 45: google.protobuf.Timestamp
 }
 var file_library_proto_depIdxs = []int32{
-	40, // 0: bookstore.Publisher.created_at:type_name -> google.protobuf.Timestamp
-	40, // 1: bookstore.Publisher.updated_at:type_name -> google.protobuf.Timestamp
-	40, // 2: bookstore.Series.created_at:type_name -> google.protobuf.Timestamp
-	40, // 3: bookstore.Series.updated_at:type_name -> google.protobuf.Timestamp
-	40, // 4: bookstore.Book.created_at:type_name -> google.protobuf.Timestamp
-	40, // 5: bookstore.Book.updated_at:type_name -> google.protobuf.Timestamp
-	40, // 6: bookstore.Customer.created_at:type_name -> google.protobuf.Timestamp
-	40, // 7: bookstore.Customer.updated_at:type_name -> google.protobuf.Timestamp
-	40, // 8: bookstore.StockRequest.created_at:type_name -> google.protobuf.Timestamp
-	40, // 9: bookstore.StockRequest.updated_at:type_name -> google.protobuf.Timestamp
-	40, // 10: bookstore.PurchaseOrder.created_at:type_name -> google.protobuf.Timestamp
-	40, // 11: bookstore.PurchaseOrder.updated_at:type_name -> google.protobuf.Timestamp
+	45, // 0: bookstore.Publisher.created_at:type_name -> google.protobuf.Timestamp
+	45, // 1: bookstore.Publisher.updated_at:type_name -> google.protobuf.Timestamp
+	45, // 2: bookstore.Series.created_at:type_name -> google.protobuf.Timestamp
+	45, // 3: bookstore.Series.updated_at:type_name -> google.protobuf.Timestamp
+	45, // 4: bookstore.Book.created_at:type_name -> google.protobuf.Timestamp
+	45, // 5: bookstore.Book.updated_at:type_name -> google.protobuf.Timestamp
+	45, // 6: bookstore.Customer.created_at:type_name -> google.protobuf.Timestamp
+	45, // 7: bookstore.Customer.updated_at:type_name -> google.protobuf.Timestamp
+	45, // 8: bookstore.StockRequest.created_at:type_name -> google.protobuf.Timestamp
+	45, // 9: bookstore.StockRequest.updated_at:type_name -> google.protobuf.Timestamp
+	45, // 10: bookstore.PurchaseOrder.created_at:type_name -> google.protobuf.Timestamp
+	45, // 11: bookstore.PurchaseOrder.updated_at:type_name -> google.protobuf.Timestamp
 	2,  // 12: bookstore.GetBookResponse.books:type_name -> bookstore.Book
 	5,  // 13: bookstore.GetPurchaseOrderResponse.purchase_orders:type_name -> bookstore.PurchaseOrder
 	3,  // 14: bookstore.GetCustomerResponse.customers:type_name -> bookstore.Customer
-	3,  // 15: bookstore.ListCustomersByCreditLevelResponse.customers:type_name -> bookstore.Customer
-	6,  // 16: bookstore.BookService.CreateBook:input_type -> bookstore.CreateBookRequest
-	8,  // 17: bookstore.BookService.GetBook:input_type -> bookstore.GetBookRequest
-	10, // 18: bookstore.BookService.UpdateBook:input_type -> bookstore.UpdateBookRequest
-	12, // 19: bookstore.BookService.DeleteBook:input_type -> bookstore.DeleteBookRequest
-	14, // 20: bookstore.StockRequestService.CreateStockRequest:input_type -> bookstore.CreateStockRequestRequest
-	16, // 21: bookstore.StockRequestService.UpdateStockRequest:input_type -> bookstore.UpdateStockRequestRequest
-	18, // 22: bookstore.PurchaseOrderService.CreatePurchaseOrder:input_type -> bookstore.CreatePurchaseOrderRequest
-	20, // 23: bookstore.PurchaseOrderService.GetPurchaseOrder:input_type -> bookstore.GetPurchaseOrderRequest
-	22, // 24: bookstore.PurchaseOrderService.UpdatePurchaseOrder:input_type -> bookstore.UpdatePurchaseOrderRequest
-	24, // 25: bookstore.PurchaseOrderService.DeletePurchaseOrder:input_type -> bookstore.DeletePurchaseOrderRequest
-	26, // 26: bookstore.PurchaseOrderService.GeneratePurchaseOrdersFromStockRequests:input_type -> bookstore.GeneratePurchaseOrdersRequest
-	28, // 27: bookstore.CustomerService.CreateCustomer:input_type -> bookstore.CreateCustomerRequest
-	30, // 28: bookstore.CustomerService.GetCustomer:input_type -> bookstore.GetCustomerRequest
-	32, // 29: bookstore.CustomerService.UpdateCustomer:input_type -> bookstore.UpdateCustomerRequest
-	34, // 30: bookstore.CustomerService.DeleteCustomer:input_type -> bookstore.DeleteCustomerRequest
-	36, // 31: bookstore.CreditLevelService.UpdateCreditLevel:input_type -> bookstore.UpdateCreditLevelRequest
-	38, // 32: bookstore.CreditLevelService.ListCustomersByCreditLevel:input_type -> bookstore.ListCustomersByCreditLevelRequest
-	7,  // 33: bookstore.BookService.CreateBook:output_type -> bookstore.CreateBookResponse
-	9,  // 34: bookstore.BookService.GetBook:output_type -> bookstore.GetBookResponse
-	11, // 35: bookstore.BookService.UpdateBook:output_type -> bookstore.UpdateBookResponse
-	13, // 36: bookstore.BookService.DeleteBook:output_type -> bookstore.DeleteBookResponse
-	15, // 37: bookstore.StockRequestService.CreateStockRequest:output_type -> bookstore.CreateStockRequestResponse
-	17, // 38: bookstore.StockRequestService.UpdateStockRequest:output_type -> bookstore.UpdateStockRequestResponse
-	19, // 39: bookstore.PurchaseOrderService.CreatePurchaseOrder:output_type -> bookstore.CreatePurchaseOrderResponse
-	21, // 40: bookstore.PurchaseOrderService.GetPurchaseOrder:output_type -> bookstore.GetPurchaseOrderResponse
-	23, // 41: bookstore.PurchaseOrderService.UpdatePurchaseOrder:output_type -> bookstore.UpdatePurchaseOrderResponse
-	25, // 42: bookstore.PurchaseOrderService.DeletePurchaseOrder:output_type -> bookstore.DeletePurchaseOrderResponse
-	27, // 43: bookstore.PurchaseOrderService.GeneratePurchaseOrdersFromStockRequests:output_type -> bookstore.GeneratePurchaseOrdersResponse
-	29, // 44: bookstore.CustomerService.CreateCustomer:output_type -> bookstore.CreateCustomerResponse
-	31, // 45: bookstore.CustomerService.GetCustomer:output_type -> bookstore.GetCustomerResponse
-	33, // 46: bookstore.CustomerService.UpdateCustomer:output_type -> bookstore.UpdateCustomerResponse
-	35, // 47: bookstore.CustomerService.DeleteCustomer:output_type -> bookstore.DeleteCustomerResponse
-	37, // 48: bookstore.CreditLevelService.UpdateCreditLevel:output_type -> bookstore.UpdateCreditLevelResponse
-	39, // 49: bookstore.CreditLevelService.ListCustomersByCreditLevel:output_type -> bookstore.ListCustomersByCreditLevelResponse
-	33, // [33:50] is the sub-list for method output_type
-	16, // [16:33] is the sub-list for method input_type
+	6,  // 15: bookstore.GetCustomerOrderResponse.customer_orders:type_name -> bookstore.CustomerOrder
+	7,  // 16: bookstore.BookService.CreateBook:input_type -> bookstore.CreateBookRequest
+	9,  // 17: bookstore.BookService.GetBook:input_type -> bookstore.GetBookRequest
+	11, // 18: bookstore.BookService.UpdateBook:input_type -> bookstore.UpdateBookRequest
+	13, // 19: bookstore.BookService.DeleteBook:input_type -> bookstore.DeleteBookRequest
+	15, // 20: bookstore.StockRequestService.CreateStockRequest:input_type -> bookstore.CreateStockRequestRequest
+	17, // 21: bookstore.StockRequestService.UpdateStockRequest:input_type -> bookstore.UpdateStockRequestRequest
+	19, // 22: bookstore.PurchaseOrderService.CreatePurchaseOrder:input_type -> bookstore.CreatePurchaseOrderRequest
+	21, // 23: bookstore.PurchaseOrderService.GetPurchaseOrder:input_type -> bookstore.GetPurchaseOrderRequest
+	23, // 24: bookstore.PurchaseOrderService.UpdatePurchaseOrder:input_type -> bookstore.UpdatePurchaseOrderRequest
+	25, // 25: bookstore.PurchaseOrderService.DeletePurchaseOrder:input_type -> bookstore.DeletePurchaseOrderRequest
+	27, // 26: bookstore.PurchaseOrderService.GeneratePurchaseOrdersFromStockRequests:input_type -> bookstore.GeneratePurchaseOrdersRequest
+	29, // 27: bookstore.CustomerService.CreateCustomer:input_type -> bookstore.CreateCustomerRequest
+	31, // 28: bookstore.CustomerService.GetCustomer:input_type -> bookstore.GetCustomerRequest
+	33, // 29: bookstore.CustomerService.UpdateCustomer:input_type -> bookstore.UpdateCustomerRequest
+	35, // 30: bookstore.CustomerService.DeleteCustomer:input_type -> bookstore.DeleteCustomerRequest
+	37, // 31: bookstore.CustomerOrderService.CreateCustomerOrder:input_type -> bookstore.CreateCustomerOrderRequest
+	39, // 32: bookstore.CustomerOrderService.GetCustomerOrder:input_type -> bookstore.GetCustomerOrderRequest
+	41, // 33: bookstore.CustomerOrderService.UpdateCustomerOrder:input_type -> bookstore.UpdateCustomerOrderRequest
+	43, // 34: bookstore.CustomerOrderService.DeleteCustomerOrder:input_type -> bookstore.DeleteCustomerOrderRequest
+	8,  // 35: bookstore.BookService.CreateBook:output_type -> bookstore.CreateBookResponse
+	10, // 36: bookstore.BookService.GetBook:output_type -> bookstore.GetBookResponse
+	12, // 37: bookstore.BookService.UpdateBook:output_type -> bookstore.UpdateBookResponse
+	14, // 38: bookstore.BookService.DeleteBook:output_type -> bookstore.DeleteBookResponse
+	16, // 39: bookstore.StockRequestService.CreateStockRequest:output_type -> bookstore.CreateStockRequestResponse
+	18, // 40: bookstore.StockRequestService.UpdateStockRequest:output_type -> bookstore.UpdateStockRequestResponse
+	20, // 41: bookstore.PurchaseOrderService.CreatePurchaseOrder:output_type -> bookstore.CreatePurchaseOrderResponse
+	22, // 42: bookstore.PurchaseOrderService.GetPurchaseOrder:output_type -> bookstore.GetPurchaseOrderResponse
+	24, // 43: bookstore.PurchaseOrderService.UpdatePurchaseOrder:output_type -> bookstore.UpdatePurchaseOrderResponse
+	26, // 44: bookstore.PurchaseOrderService.DeletePurchaseOrder:output_type -> bookstore.DeletePurchaseOrderResponse
+	28, // 45: bookstore.PurchaseOrderService.GeneratePurchaseOrdersFromStockRequests:output_type -> bookstore.GeneratePurchaseOrdersResponse
+	30, // 46: bookstore.CustomerService.CreateCustomer:output_type -> bookstore.CreateCustomerResponse
+	32, // 47: bookstore.CustomerService.GetCustomer:output_type -> bookstore.GetCustomerResponse
+	34, // 48: bookstore.CustomerService.UpdateCustomer:output_type -> bookstore.UpdateCustomerResponse
+	36, // 49: bookstore.CustomerService.DeleteCustomer:output_type -> bookstore.DeleteCustomerResponse
+	38, // 50: bookstore.CustomerOrderService.CreateCustomerOrder:output_type -> bookstore.CreateCustomerOrderResponse
+	40, // 51: bookstore.CustomerOrderService.GetCustomerOrder:output_type -> bookstore.GetCustomerOrderResponse
+	42, // 52: bookstore.CustomerOrderService.UpdateCustomerOrder:output_type -> bookstore.UpdateCustomerOrderResponse
+	44, // 53: bookstore.CustomerOrderService.DeleteCustomerOrder:output_type -> bookstore.DeleteCustomerOrderResponse
+	35, // [35:54] is the sub-list for method output_type
+	16, // [16:35] is the sub-list for method input_type
 	16, // [16:16] is the sub-list for extension type_name
 	16, // [16:16] is the sub-list for extension extendee
 	0,  // [0:16] is the sub-list for field type_name
@@ -3354,7 +3888,7 @@ func file_library_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_library_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   40,
+			NumMessages:   45,
 			NumExtensions: 0,
 			NumServices:   5,
 		},

@@ -114,7 +114,7 @@ func (s *StockRequestServiceServer) UpdateStockRequest(ctx context.Context, req 
 		if req.GetAuthor() != "" {
 			query = query.Where("author = ?", req.GetAuthor())
 		}
-		if req.GetQuantity() != 0 {
+		if req.GetQuantity() != -1 {
 			query = query.Where("quantity = ?", req.GetQuantity())
 		}
 		if req.GetRequestDate() != "" {

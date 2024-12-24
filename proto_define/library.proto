@@ -87,9 +87,37 @@ message CustomerOrder {
   string order_date = 2;
   int32 customer_id = 3;
   string customer_online_id = 4;
+  string book_no = 5;
+  int32 book_count = 6;
+  int32 price = 7;
+  string address = 8;
+  string status = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+// 供书记录
+message SupplyBook {
+  int32 id = 1;
+  string book_no = 2;
+  string title = 3;
+  string publisher_name = 4;
   int32 price = 5;
-  string address = 6;
-  bool finished = 7;
+  int32 quantity = 6;
+  int32 supplier_id = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+// 供应商
+message Supplier {
+  int32 id = 1;
+  string name = 2;
+  string basic_info = 3;
+  string supply_info = 4;
+  repeated SupplyBook supply_books = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
 }
 
 /*--------------------------------------------书籍部分--------------------------------------------*/
@@ -394,9 +422,137 @@ message DeleteCustomerResponse {
 /*--------------------------------------------客户信息管理部分--------------------------------------------*/
 
 /*--------------------------------------------订单管理部分--------------------------------------------*/
+// 客户订单服务
+service CustomerOrderService {
+  rpc CreateCustomerOrder(CreateCustomerOrderRequest) returns (CreateCustomerOrderResponse);
+  rpc GetCustomerOrder(GetCustomerOrderRequest) returns (GetCustomerOrderResponse);
+  rpc UpdateCustomerOrder(UpdateCustomerOrderRequest) returns (UpdateCustomerOrderResponse);
+  rpc DeleteCustomerOrder(DeleteCustomerOrderRequest) returns (DeleteCustomerOrderResponse);
+}
 
+// 创建客户订单请求
+message CreateCustomerOrderRequest {
+  string order_date = 1;
+  int32 customer_id = 2;
+  string customer_online_id = 3;
+  string book_no = 4;
+  int32 book_count = 5;
+  int32 price = 6;
+  string address = 7;
+  string status = 8;
+}
+
+// 创建客户订单应答
+message CreateCustomerOrderResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 获取客户订单请求
+message GetCustomerOrderRequest {
+  int32 start = 1;
+  int32 stop = 2;
+}
+
+// 获取客户订单应答
+message GetCustomerOrderResponse {
+  bool success = 1;
+  string feedback = 2;
+  repeated CustomerOrder customer_orders = 3;
+}
+
+// 更新客户订单请求
+message UpdateCustomerOrderRequest {
+  int32 id = 1;
+  string order_date = 2;
+  int32 customer_id = 3;
+  string customer_online_id = 4;
+  string book_no = 5;
+  int32 book_count = 6;
+  int32 price = 7;
+  string address = 8;
+  string status = 9;
+}
+
+// 更新客户订单应答
+message UpdateCustomerOrderResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 删除客户订单请求
+message DeleteCustomerOrderRequest {
+  int32 id = 1;
+}
+
+// 删除客户订单应答
+message DeleteCustomerOrderResponse {
+  bool success = 1;
+  string feedback = 2;
+}
 /*--------------------------------------------订单管理部分--------------------------------------------*/
 
+/*--------------------------------------------供应商管理部分--------------------------------------------*/
+// 供应商服务
+service SupplierService {
+  rpc CreateSupplier(CreateSupplierRequest) returns (CreateSupplierResponse);
+  rpc GetSupplier(GetSupplierRequest) returns (GetSupplierResponse);
+  rpc UpdateSupplier(UpdateSupplierRequest) returns (UpdateSupplierResponse);
+  rpc DeleteSupplier(DeleteSupplierRequest) returns (DeleteSupplierResponse);
+}
+
+// 创建供应商请求
+message CreateSupplierRequest {
+  string name = 1;
+  string basic_info = 2;
+  string supply_info = 3;
+  string 
+}
+
+// 创建供应商应答
+message CreateSupplierResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 获取供应商请求
+message GetSupplierRequest {
+  int32 start = 1;
+  int32 stop = 2;
+}
+
+// 获取供应商应答
+message GetSupplierResponse {
+  bool success = 1;
+  string feedback = 2;
+  Supplier supplier = 3;
+}
+
+// 更新供应商请求
+message UpdateSupplierRequest {
+  int32 id = 1;
+  string name = 2;
+  string basic_info = 3;
+  string supply_info = 4;
+}
+
+// 更新供应商应答
+message UpdateSupplierResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+
+// 删除供应商请求
+message DeleteSupplierRequest {
+  int32 id = 1;
+}
+
+// 删除供应商应答
+message DeleteSupplierResponse {
+  bool success = 1;
+  string feedback = 2;
+}
+/*--------------------------------------------供应商管理部分--------------------------------------------*/
 
 /*--------------------------------------------网上查询部分--------------------------------------------*/
 

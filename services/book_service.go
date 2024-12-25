@@ -137,10 +137,88 @@ func (s *BookServiceServer) GetBook(ctx context.Context, req *pb.GetBookRequest)
 
 // UpdateBook 更新现有书籍
 func (s *BookServiceServer) UpdateBook(ctx context.Context, req *pb.UpdateBookRequest) (*pb.UpdateBookResponse, error) {
-	return nil, nil
+	// 查找书籍
+	var book models.Book
+	if err := s.db.First(&book, req.GetBookNo()).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return &pb.UpdateBookResponse{
+				Success:  false,
+				Feedback: "Book not found",
+			}, nil
+		}
+		return &pb.UpdateBookResponse{
+			Success:  false,
+			Feedback: fmt.Sprintf("failed to query book: %v", err),
+		}, nil
+	}
+
+	// 更新字段
+	if req.GetBookNo() != "" {
+		book.BookNo = req.GetBookNo()
+	}
+	if req.GetTitle() != "" {
+		book.Title = req.GetTitle()
+	}
+	if req.GetPublisherName() != "" {
+		book.PublisherName = req.GetPublisherName()
+	}
+	if req.GetPrice() > 0 {
+		book.Price = int32(req.GetPrice())
+	}
+	if req.GetStockQuantity() > 0 {
+		book.StockQuantity = req.GetStockQuantity()
+	}
+	if req.GetAuthors() != "" {
+		book.Authors = req.GetAuthors()
+	}
+	if req.GetKeywords() != "" {
+		book.Keywords = req.GetKeywords()
+	}
+	book.UpdatedAt = time.Now()
+
+	// 保存更新
+	if err := s.db.Save(&book).Error; err != nil {
+		return &pb.UpdateBookResponse{
+			Success:  false,
+			Feedback: fmt.Sprintf("failed to update book: %v", err),
+		}, nil
+	}
+
+	// 返回成功的响应
+	return &pb.UpdateBookResponse{
+		Success:  true,
+		Feedback: "Book updated successfully",
+	}, nil
 }
 
 // DeleteBook 删除书籍
 func (s *BookServiceServer) DeleteBook(ctx context.Context, req *pb.DeleteBookRequest) (*pb.DeleteBookResponse, error) {
-	return nil, nil
+	// 查找书籍
+	var book models.Book
+	if err := s.db.First(&book, req.GetBookId()).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return &pb.DeleteBookResponse{
+				Success:  false,
+				Feedback: "Book not found",
+			}, nil
+		}
+		return &pb.DeleteBookResponse{
+			Success:  false,
+			Feedback: fmt.Sprintf("failed to query book: %v", err),
+		}, nil
+	}
+
+	// 删除书籍
+	if err := s.db.Delete(&book).Error; err != nil {
+		return &pb.DeleteBookResponse{
+			Success:  false,
+			Feedback: fmt.Sprintf("failed to delete book: %v", err),
+		}, nil
+	}
+
+	// 返回成功的响应
+	return &pb.DeleteBookResponse{
+		Success:  true,
+		Feedback: "Book deleted successfully",
+	}, nil
 }

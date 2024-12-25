@@ -27,7 +27,6 @@ func setupTestDBOnlineService(t *testing.T) *gorm.DB {
 func TestOnlineService(t *testing.T) {
 	db := setupTestDBOnlineService(t)
 	bookServer := NewBookServiceServer(db)
-	customerServer := NewCustomerServiceServer(db)
 	customerOrderServer := NewCustomerOrderServiceServer(db)
 	onlineServiceServer := NewOnlineServiceServer(db)
 
@@ -49,24 +48,20 @@ func TestOnlineService(t *testing.T) {
 	}
 
 	// 添加几个客户
-	for i := 1; i <= 3; i++ {
-		createCustomerReq := &pb.CreateCustomerRequest{
-			OnlineId:       fmt.Sprintf("customer%d", i),
-			Password:       "password",
-			Name:           fmt.Sprintf("Customer %d", i),
-			Address:        fmt.Sprintf("Address %d", i),
-			AccountBalance: 1000,
-			CreditLevel:    1,
-		}
-		createCustomerResp, err := customerServer.CreateCustomer(context.Background(), createCustomerReq)
-		assert.NoError(t, err)
-		assert.True(t, createCustomerResp.Success)
-		assert.Equal(t, "Customer created successfully", createCustomerResp.Feedback)
+	customers := []models.Customer{
+		{OnlineID: "customer1", Password: "password", Name: "Customer 1", Address: "Address 1", AccountBalance: 1000, CreditLevel: 1},
+		{OnlineID: "customer2", Password: "password", Name: "Customer 2", Address: "Address 2", AccountBalance: 2000, CreditLevel: 2},
+		{OnlineID: "customer3", Password: "password", Name: "Customer 3", Address: "Address 3", AccountBalance: 3000, CreditLevel: 3},
 	}
+	for _, customer := range customers {
+		db.Create(&customer)
+	}
+
+	var createCustomerOrderReqs [10]*pb.CreateCustomerOrderRequest
 
 	// 添加几个订单
 	for i := 1; i <= 3; i++ {
-		createCustomerOrderReq := &pb.CreateCustomerOrderRequest{
+		createCustomerOrderReqs[i] = &pb.CreateCustomerOrderRequest{
 			OrderDate:        time.Now().Format("2006-01-02"),
 			CustomerOnlineId: fmt.Sprintf("customer%d", i),
 			BookNo:           fmt.Sprintf("B%03d", i),
@@ -75,10 +70,18 @@ func TestOnlineService(t *testing.T) {
 			Address:          fmt.Sprintf("Address %d", i),
 			Status:           "未发货",
 		}
-		createCustomerOrderResp, err := customerOrderServer.CreateCustomerOrder(context.Background(), createCustomerOrderReq)
+		createCustomerOrderResp, err := customerOrderServer.CreateCustomerOrder(context.Background(), createCustomerOrderReqs[i])
 		assert.NoError(t, err)
 		assert.True(t, createCustomerOrderResp.Success)
 		assert.Equal(t, "Customer order created successfully", createCustomerOrderResp.Feedback)
+
+		// 检查客户余额是否正确变动
+		var customer models.Customer
+		db.Where("online_id = ?", fmt.Sprintf("customer%d", i)).First(&customer)
+		discount := discount[customer.CreditLevel]
+		finalPrice := createCustomerOrderReqs[i].Price * (100 - int32(discount)) / 100
+		expectedBalance := int32(1000*i) - finalPrice
+		assert.Equal(t, expectedBalance, customer.AccountBalance)
 	}
 
 	// 查询并验证书籍
@@ -101,8 +104,8 @@ func TestOnlineService(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, fmt.Sprintf("Customer %d", i), customer.Name)
 		assert.Equal(t, fmt.Sprintf("Address %d", i), customer.Address)
-		assert.Equal(t, int32(1000), customer.AccountBalance)
-		assert.Equal(t, int32(1), customer.CreditLevel)
+		assert.Equal(t, int32(1000*i)-createCustomerOrderReqs[i].Price*(100-int32(discount[customer.CreditLevel]))/100, customer.AccountBalance)
+		assert.Equal(t, int32(i), customer.CreditLevel)
 	}
 
 	// 查询并验证订单

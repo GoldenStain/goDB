@@ -139,7 +139,7 @@ func (s *BookServiceServer) GetBook(ctx context.Context, req *pb.GetBookRequest)
 func (s *BookServiceServer) UpdateBook(ctx context.Context, req *pb.UpdateBookRequest) (*pb.UpdateBookResponse, error) {
 	// 查找书籍
 	var book models.Book
-	if err := s.db.First(&book, req.GetBookNo()).Error; err != nil {
+	if err := s.db.Where("book_no = ?", req.GetBookNo()).First(&book).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return &pb.UpdateBookResponse{
 				Success:  false,

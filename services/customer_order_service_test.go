@@ -53,7 +53,9 @@ func TestCustomerOrderService(t *testing.T) {
 		// 检查客户余额是否正确变动
 		var customer models.Customer
 		db.Where("online_id = ?", fmt.Sprintf("online_id_%d", i)).First(&customer)
-		expectedBalance := int32(1000*i) - req.Price
+		discount := discount[customer.CreditLevel]
+		finalPrice := req.Price * (100 - int32(discount)) / 100
+		expectedBalance := int32(1000*i) - finalPrice
 		assert.Equal(t, expectedBalance, customer.AccountBalance)
 	}
 

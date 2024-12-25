@@ -9,6 +9,10 @@ import (
 	"gorm.io/gorm"
 )
 
+// 定义折扣数组和透支额度数组
+var discount = []int{0, 10, 15, 15, 20, 25}
+var overdraft = []int{0, 0, 0, 250, 500, 65536}
+
 type CustomerOrderServiceServer struct {
 	pb.UnimplementedCustomerOrderServiceServer
 	db *gorm.DB
@@ -34,7 +38,7 @@ func (s *CustomerOrderServiceServer) CreateCustomerOrder(ctx context.Context, re
 	if req.GetCustomerOnlineId() == "" {
 		return &pb.CreateCustomerOrderResponse{
 			Success:  false,
-			Feedback: "Customer ID or CustomerOnelineId is required",
+			Feedback: "Customer ID or CustomerOnlineId is required",
 		}, nil
 	}
 
@@ -82,16 +86,20 @@ func (s *CustomerOrderServiceServer) CreateCustomerOrder(ctx context.Context, re
 		}, nil
 	}
 
-	// 检查客户余额是否足够
-	if customer.AccountBalance < req.GetPrice() {
+	// 计算折扣后的价格
+	discount := discount[customer.CreditLevel]
+	finalPrice := req.GetPrice() * (100 - int32(discount)) / 100
+
+	// 检查客户余额和透支额度是否足够
+	if customer.AccountBalance+int32(overdraft[customer.CreditLevel]) < finalPrice {
 		return &pb.CreateCustomerOrderResponse{
 			Success:  false,
-			Feedback: "Insufficient account balance",
+			Feedback: "Insufficient account balance and overdraft limit",
 		}, nil
 	}
 
 	// 扣除客户余额
-	customer.AccountBalance -= req.GetPrice()
+	customer.AccountBalance -= finalPrice
 	if err := s.db.Save(&customer).Error; err != nil {
 		return &pb.CreateCustomerOrderResponse{
 			Success:  false,
@@ -195,7 +203,7 @@ func (s *CustomerOrderServiceServer) UpdateCustomerOrder(ctx context.Context, re
 		// 这个字段不能更改
 		return &pb.UpdateCustomerOrderResponse{
 			Success:  false,
-			Feedback: "Customer ID or CustomerOnelineId cannot be changed",
+			Feedback: "Customer ID or CustomerOnlineId cannot be changed",
 		}, nil
 	}
 	if req.GetBookNo() != "" {

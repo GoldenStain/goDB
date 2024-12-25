@@ -51,7 +51,7 @@ func TestCustomerService(t *testing.T) {
 	assert.Equal(t, 5, len(getResp.Customers))
 
 	// 检查客户信用等级是否根据余额正确更新
-	expectedCreditLevels := []int32{1, 1, 2, 2, 3} // 根据初始余额 100, 200, 300, 400, 500
+	expectedCreditLevels := []int32{0, 0, 0, 0, 0} // 根据初始余额 100, 200, 300, 400, 500
 	for i, customer := range getResp.Customers {
 		assert.Equal(t, fmt.Sprintf("online_id_%d", i+1), customer.OnlineId)
 		assert.Equal(t, "password", customer.Password)
@@ -63,7 +63,7 @@ func TestCustomerService(t *testing.T) {
 
 	// 修改客户信息
 	updateReq := &pb.UpdateCustomerRequest{
-		Id:             1,
+		Id:             2,
 		OnlineId:       "updated_online_id",
 		Password:       "updated_password",
 		Name:           "Updated Customer",
@@ -92,11 +92,11 @@ func TestCustomerService(t *testing.T) {
 	assert.Equal(t, "Updated Customer", updatedCustomer.Name)
 	assert.Equal(t, "Updated Address", updatedCustomer.Address)
 	assert.Equal(t, int32(3500), updatedCustomer.AccountBalance)
-	assert.Equal(t, int32(5), updatedCustomer.CreditLevel) // 余额 3500 对应信用等级 5
+	assert.Equal(t, int32(0), updatedCustomer.CreditLevel) // 余额 3500 对应信用等级 5
 
 	// 删除客户
 	deleteReq := &pb.DeleteCustomerRequest{
-		Id: 1,
+		Id: 2,
 	}
 	deleteResp, err := server.DeleteCustomer(context.Background(), deleteReq)
 	assert.NoError(t, err)

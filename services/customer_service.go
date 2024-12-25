@@ -17,6 +17,7 @@ const (
 	threshold3 = 500
 	threshold4 = 1000
 	threshold5 = 3000
+	oneMonth   = 30 * 24 * time.Hour
 )
 
 type CustomerServiceServer struct {
@@ -26,6 +27,21 @@ type CustomerServiceServer struct {
 
 // NewCustomerServiceServer 用于创建 CustomerServiceServer
 func NewCustomerServiceServer(db *gorm.DB) *CustomerServiceServer {
+	// 初始化虚拟客户
+	var virtualCustomer models.Customer
+	if err := db.Where("name = ?", "virtual").First(&virtualCustomer).Error; err == gorm.ErrRecordNotFound {
+		virtualCustomer = models.Customer{
+			OnlineID:       "virtual",
+			Password:       "virtual",
+			Name:           "virtual",
+			Address:        "virtual",
+			AccountBalance: 0,
+			CreditLevel:    0,
+			CreatedAt:      time.Now(),
+			UpdatedAt:      time.Now(),
+		}
+		db.Create(&virtualCustomer)
+	}
 	return &CustomerServiceServer{
 		db: db,
 	}
@@ -99,38 +115,53 @@ func (s *CustomerServiceServer) GetCustomer(ctx context.Context, req *pb.GetCust
 		}, nil
 	}
 
-	// 查询客户
+	// 查询客户，排除虚拟客户
 	var customers []*models.Customer
-	if err := s.db.Offset(int(req.GetStart())).Limit(int(req.GetStop() - req.GetStart() + 1)).Find(&customers).Error; err != nil {
+	if err := s.db.Where("name != ?", "virtual").Offset(int(req.GetStart())).Limit(int(req.GetStop() - req.GetStart() + 1)).Find(&customers).Error; err != nil {
 		return &pb.GetCustomerResponse{
 			Success:  false,
 			Feedback: fmt.Sprintf("Failed to query customers: %v", err),
 		}, nil
 	}
 
-	// 更新客户信用等级
-	for _, customer := range customers {
-		originalCreditLevel := customer.CreditLevel
-		switch {
-		case customer.AccountBalance >= threshold5:
-			customer.CreditLevel = 5
-		case customer.AccountBalance >= threshold4:
-			customer.CreditLevel = 4
-		case customer.AccountBalance >= threshold3:
-			customer.CreditLevel = 3
-		case customer.AccountBalance >= threshold2:
-			customer.CreditLevel = 2
-		case customer.AccountBalance >= threshold1:
-			customer.CreditLevel = 1
-		default:
-			customer.CreditLevel = 0
-		}
+	// 查询虚拟客户
+	var virtualCustomer models.Customer
+	if err := s.db.Where("name = ?", "virtual").First(&virtualCustomer).Error; err != nil {
+		return &pb.GetCustomerResponse{
+			Success:  false,
+			Feedback: fmt.Sprintf("Failed to query virtual customer: %v", err),
+		}, nil
+	}
 
-		// 如果信用等级有变化，更新数据库
-		if customer.CreditLevel != originalCreditLevel {
-			customer.UpdatedAt = time.Now()
-			s.db.Save(&customer)
+	// 更新客户信用等级
+	now := time.Now()
+	if now.Sub(virtualCustomer.UpdatedAt) > oneMonth {
+		for _, customer := range customers {
+			originalCreditLevel := customer.CreditLevel
+			switch {
+			case customer.AccountBalance >= threshold5:
+				customer.CreditLevel = 5
+			case customer.AccountBalance >= threshold4:
+				customer.CreditLevel = 4
+			case customer.AccountBalance >= threshold3:
+				customer.CreditLevel = 3
+			case customer.AccountBalance >= threshold2:
+				customer.CreditLevel = 2
+			case customer.AccountBalance >= threshold1:
+				customer.CreditLevel = 1
+			default:
+				customer.CreditLevel = 0
+			}
+
+			// 如果信用等级有变化，更新数据库
+			if customer.CreditLevel != originalCreditLevel {
+				customer.UpdatedAt = now
+				s.db.Save(&customer)
+			}
 		}
+		// 更新虚拟客户的更新时间
+		virtualCustomer.UpdatedAt = now
+		s.db.Save(&virtualCustomer)
 	}
 
 	// 构建响应

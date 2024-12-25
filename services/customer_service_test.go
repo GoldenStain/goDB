@@ -32,7 +32,7 @@ func TestCustomerService(t *testing.T) {
 			Name:           fmt.Sprintf("Customer %d", i),
 			Address:        fmt.Sprintf("Address %d", i),
 			AccountBalance: int32(100 * i),
-			CreditLevel:    int32(i),
+			CreditLevel:    0, // 初始信用等级设为 0
 		}
 		resp, err := server.CreateCustomer(context.Background(), req)
 		assert.NoError(t, err)
@@ -50,13 +50,15 @@ func TestCustomerService(t *testing.T) {
 	assert.True(t, getResp.Success)
 	assert.Equal(t, 5, len(getResp.Customers))
 
+	// 检查客户信用等级是否根据余额正确更新
+	expectedCreditLevels := []int32{1, 1, 2, 2, 3} // 根据初始余额 100, 200, 300, 400, 500
 	for i, customer := range getResp.Customers {
 		assert.Equal(t, fmt.Sprintf("online_id_%d", i+1), customer.OnlineId)
 		assert.Equal(t, "password", customer.Password)
 		assert.Equal(t, fmt.Sprintf("Customer %d", i+1), customer.Name)
 		assert.Equal(t, fmt.Sprintf("Address %d", i+1), customer.Address)
 		assert.Equal(t, int32(100*(i+1)), customer.AccountBalance)
-		assert.Equal(t, int32(i+1), customer.CreditLevel)
+		assert.Equal(t, expectedCreditLevels[i], customer.CreditLevel)
 	}
 
 	// 修改客户信息
@@ -66,8 +68,8 @@ func TestCustomerService(t *testing.T) {
 		Password:       "updated_password",
 		Name:           "Updated Customer",
 		Address:        "Updated Address",
-		AccountBalance: 500,
-		CreditLevel:    10,
+		AccountBalance: 3500, // 更新余额以测试信用等级变动
+		CreditLevel:    0,    // 信用等级将由系统自动更新
 	}
 	updateResp, err := server.UpdateCustomer(context.Background(), updateReq)
 	assert.NoError(t, err)
@@ -89,8 +91,8 @@ func TestCustomerService(t *testing.T) {
 	assert.Equal(t, "updated_password", updatedCustomer.Password)
 	assert.Equal(t, "Updated Customer", updatedCustomer.Name)
 	assert.Equal(t, "Updated Address", updatedCustomer.Address)
-	assert.Equal(t, int32(500), updatedCustomer.AccountBalance)
-	assert.Equal(t, int32(10), updatedCustomer.CreditLevel)
+	assert.Equal(t, int32(3500), updatedCustomer.AccountBalance)
+	assert.Equal(t, int32(5), updatedCustomer.CreditLevel) // 余额 3500 对应信用等级 5
 
 	// 删除客户
 	deleteReq := &pb.DeleteCustomerRequest{

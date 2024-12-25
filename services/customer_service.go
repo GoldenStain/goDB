@@ -11,6 +11,14 @@ import (
 	"gorm.io/gorm"
 )
 
+const (
+	threshold1 = 100
+	threshold2 = 300
+	threshold3 = 500
+	threshold4 = 1000
+	threshold5 = 3000
+)
+
 type CustomerServiceServer struct {
 	pb.UnimplementedCustomerServiceServer
 	db *gorm.DB
@@ -98,6 +106,31 @@ func (s *CustomerServiceServer) GetCustomer(ctx context.Context, req *pb.GetCust
 			Success:  false,
 			Feedback: fmt.Sprintf("Failed to query customers: %v", err),
 		}, nil
+	}
+
+	// 更新客户信用等级
+	for _, customer := range customers {
+		originalCreditLevel := customer.CreditLevel
+		switch {
+		case customer.AccountBalance >= threshold5:
+			customer.CreditLevel = 5
+		case customer.AccountBalance >= threshold4:
+			customer.CreditLevel = 4
+		case customer.AccountBalance >= threshold3:
+			customer.CreditLevel = 3
+		case customer.AccountBalance >= threshold2:
+			customer.CreditLevel = 2
+		case customer.AccountBalance >= threshold1:
+			customer.CreditLevel = 1
+		default:
+			customer.CreditLevel = 0
+		}
+
+		// 如果信用等级有变化，更新数据库
+		if customer.CreditLevel != originalCreditLevel {
+			customer.UpdatedAt = time.Now()
+			s.db.Save(&customer)
+		}
 	}
 
 	// 构建响应

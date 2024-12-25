@@ -73,6 +73,32 @@ func (s *CustomerOrderServiceServer) CreateCustomerOrder(ctx context.Context, re
 		}, nil
 	}
 
+	// 查找客户
+	var customer models.Customer
+	if err := s.db.Where("online_id = ?", req.GetCustomerOnlineId()).First(&customer).Error; err != nil {
+		return &pb.CreateCustomerOrderResponse{
+			Success:  false,
+			Feedback: "Customer not found",
+		}, nil
+	}
+
+	// 检查客户余额是否足够
+	if customer.AccountBalance < req.GetPrice() {
+		return &pb.CreateCustomerOrderResponse{
+			Success:  false,
+			Feedback: "Insufficient account balance",
+		}, nil
+	}
+
+	// 扣除客户余额
+	customer.AccountBalance -= req.GetPrice()
+	if err := s.db.Save(&customer).Error; err != nil {
+		return &pb.CreateCustomerOrderResponse{
+			Success:  false,
+			Feedback: fmt.Sprintf("Failed to update customer balance: %v", err),
+		}, nil
+	}
+
 	// 构建新的 CustomerOrder 对象
 	customerOrder := &models.CustomerOrder{
 		OrderDate:        req.GetOrderDate(),

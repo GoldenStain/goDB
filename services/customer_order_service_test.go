@@ -24,8 +24,18 @@ func TestCustomerOrderService(t *testing.T) {
 	db := setupTestDBCustomerOrder(t)
 	server := NewCustomerOrderServiceServer(db)
 
+	// 添加一些客户
+	customers := []models.Customer{
+		{OnlineID: "online_id_1", Password: "password1", Name: "Customer 1", Address: "Address 1", AccountBalance: 1000, CreditLevel: 1},
+		{OnlineID: "online_id_2", Password: "password2", Name: "Customer 2", Address: "Address 2", AccountBalance: 2000, CreditLevel: 2},
+		{OnlineID: "online_id_3", Password: "password3", Name: "Customer 3", Address: "Address 3", AccountBalance: 3000, CreditLevel: 3},
+	}
+	for _, customer := range customers {
+		db.Create(&customer)
+	}
+
 	// 添加一些客户订单
-	for i := 1; i <= 5; i++ {
+	for i := 1; i <= 3; i++ {
 		req := &pb.CreateCustomerOrderRequest{
 			OrderDate:        "2023-01-01",
 			CustomerOnlineId: fmt.Sprintf("online_id_%d", i),
@@ -39,17 +49,23 @@ func TestCustomerOrderService(t *testing.T) {
 		assert.NoError(t, err)
 		assert.True(t, resp.Success)
 		assert.Equal(t, "Customer order created successfully", resp.Feedback)
+
+		// 检查客户余额是否正确变动
+		var customer models.Customer
+		db.Where("online_id = ?", fmt.Sprintf("online_id_%d", i)).First(&customer)
+		expectedBalance := int32(1000*i) - req.Price
+		assert.Equal(t, expectedBalance, customer.AccountBalance)
 	}
 
 	// 验证 GetCustomerOrder 方法
 	getReq := &pb.GetCustomerOrderRequest{
 		Start: 0,
-		Stop:  4,
+		Stop:  2,
 	}
 	getResp, err := server.GetCustomerOrder(context.Background(), getReq)
 	assert.NoError(t, err)
 	assert.True(t, getResp.Success)
-	assert.Equal(t, 5, len(getResp.CustomerOrders))
+	assert.Equal(t, 3, len(getResp.CustomerOrders))
 
 	for i, order := range getResp.CustomerOrders {
 		assert.Equal(t, "2023-01-01", order.OrderDate)
@@ -79,12 +95,12 @@ func TestCustomerOrderService(t *testing.T) {
 	// 再次验证 GetCustomerOrder 方法
 	getReq = &pb.GetCustomerOrderRequest{
 		Start: 0,
-		Stop:  4,
+		Stop:  2,
 	}
 	getResp, err = server.GetCustomerOrder(context.Background(), getReq)
 	assert.NoError(t, err)
 	assert.True(t, getResp.Success)
-	assert.Equal(t, 5, len(getResp.CustomerOrders))
+	assert.Equal(t, 3, len(getResp.CustomerOrders))
 
 	updatedOrder := getResp.CustomerOrders[0]
 	assert.Equal(t, "2023-02-01", updatedOrder.OrderDate)
@@ -107,10 +123,10 @@ func TestCustomerOrderService(t *testing.T) {
 	// 验证客户订单是否删除成功
 	getReq = &pb.GetCustomerOrderRequest{
 		Start: 0,
-		Stop:  4,
+		Stop:  2,
 	}
 	getResp, err = server.GetCustomerOrder(context.Background(), getReq)
 	assert.NoError(t, err)
 	assert.True(t, getResp.Success)
-	assert.Equal(t, 4, len(getResp.CustomerOrders))
+	assert.Equal(t, 2, len(getResp.CustomerOrders))
 }

@@ -646,10 +646,7 @@ service OnlineService {
 
 // 查询客户请求
 message QueryCustomerRequest {
-  string online_id = 1;
-  string name = 2;
-  string address = 3;
-  int32 order_id = 4;
+  string input = 1;
 }
 
 // 查询客户响应
@@ -661,12 +658,7 @@ message QueryCustomerResponse {
 
 // 查询书籍请求
 message QueryBookRequest {
-  string book_no = 1;
-  string title = 2;
-  string publisher_name = 3;
-  string keywords = 4;
-  string authors = 5;
-  int32 match_threshold = 6;
+  string input = 1;
 }
 
 // 查询书籍响应

@@ -3,6 +3,8 @@ package services
 import (
 	"context"
 	"fmt"
+	"os"
+	"path/filepath"
 	"time"
 
 	pb "github.com/GoldenStain/goDB/bookstorepb"
@@ -196,17 +198,37 @@ func (s *PurchaseOrderServiceServer) UpdatePurchaseOrder(ctx context.Context, re
 		// 更新书籍库存数量
 		var book models.Book
 		if err := s.db.Where("book_no = ?", purchaseOrder.BookNo).First(&book).Error; err != nil {
-			return &pb.UpdatePurchaseOrderResponse{
-				Success:  false,
-				Feedback: fmt.Sprintf("failed to find book: %v", err),
-			}, nil
-		}
-		book.StockQuantity += purchaseOrder.Quantity
-		if err := s.db.Save(&book).Error; err != nil {
-			return &pb.UpdatePurchaseOrderResponse{
-				Success:  false,
-				Feedback: fmt.Sprintf("failed to update book stock quantity: %v", err),
-			}, nil
+			if err == gorm.ErrRecordNotFound {
+				// 如果书籍不存在，创建书籍记录
+				book = models.Book{
+					BookNo:        purchaseOrder.BookNo,
+					Title:         purchaseOrder.Title,
+					PublisherName: purchaseOrder.Publisher,
+					Authors:       purchaseOrder.Author,
+					StockQuantity: purchaseOrder.Quantity,
+					CreatedAt:     time.Now(),
+					UpdatedAt:     time.Now(),
+				}
+				if err := s.db.Create(&book).Error; err != nil {
+					return &pb.UpdatePurchaseOrderResponse{
+						Success:  false,
+						Feedback: fmt.Sprintf("failed to create book: %v", err),
+					}, nil
+				}
+			} else {
+				return &pb.UpdatePurchaseOrderResponse{
+					Success:  false,
+					Feedback: fmt.Sprintf("failed to find book: %v", err),
+				}, nil
+			}
+		} else {
+			book.StockQuantity += purchaseOrder.Quantity
+			if err := s.db.Save(&book).Error; err != nil {
+				return &pb.UpdatePurchaseOrderResponse{
+					Success:  false,
+					Feedback: fmt.Sprintf("failed to update book stock quantity: %v", err),
+				}, nil
+			}
 		}
 	}
 	purchaseOrder.UpdatedAt = time.Now()
@@ -269,7 +291,7 @@ func (s *PurchaseOrderServiceServer) GeneratePurchaseOrdersFromStockRequests(ctx
 			Feedback: fmt.Sprintf("Failed to query stock requests: %v", err),
 		}, nil
 	}
-
+	var feedback string
 	// 生成采购单
 	for _, stockRequest := range stockRequests {
 		purchaseOrder := &models.PurchaseOrder{
@@ -300,11 +322,53 @@ func (s *PurchaseOrderServiceServer) GeneratePurchaseOrdersFromStockRequests(ctx
 				Feedback: fmt.Sprintf("Failed to update stock request: %v", err),
 			}, nil
 		}
+
+		// 发送电子邮件通想要买相应书的客户
+		feedback = s.generateFakeEmail(*stockRequest)
 	}
 
 	// 返回成功的响应
 	return &pb.GeneratePurchaseOrdersResponse{
 		Success:  true,
-		Feedback: "Purchase orders generated successfully",
+		Feedback: fmt.Sprintf("Purchase orders generated successfully\n%s", feedback),
 	}, nil
+}
+
+// generateFakeEmail 生成假电子邮件
+func (s *PurchaseOrderServiceServer) generateFakeEmail(stockRequest models.StockRequest) string {
+	// 创建目录
+	dir := ".\\fake_emails"
+	if err := os.MkdirAll(dir, os.ModePerm); err != nil {
+		fmt.Printf("Failed to create directory: %v\n", err)
+		return "Failed to create directory"
+	}
+
+	// 查找相关客户订单
+	var customerOrders []models.CustomerOrder
+	if err := s.db.Where("book_no = ?", stockRequest.BookNo).Find(&customerOrders).Error; err != nil {
+		fmt.Printf("Failed to query customer orders: %v\n", err)
+		return "Failed to query customer orders"
+	}
+
+	if len(customerOrders) == 0 {
+		return fmt.Sprintf("没有客户创建了书目%s的相关订单，无须发送邮件", stockRequest.Title)
+	}
+
+	// 生成假电子邮件
+	for _, order := range customerOrders {
+		var customer models.Customer
+		if err := s.db.Where("online_id = ?", order.CustomerOnlineID).First(&customer).Error; err != nil {
+			fmt.Printf("Failed to query customer: %v\n", err)
+			continue
+		}
+
+		emailContent := fmt.Sprintf("客户%s您好，您要的%s书目已经上新", customer.Name, stockRequest.Title)
+		today := time.Now().Format("2006-01-02")
+		emailFile := filepath.Join(dir, fmt.Sprintf("email_%d_%s.txt", order.ID, today))
+		if err := os.WriteFile(emailFile, []byte(emailContent), 0644); err != nil {
+			fmt.Printf("Failed to write email file: %v\n", err)
+		}
+	}
+
+	return "已暂存电子邮件通知客户"
 }

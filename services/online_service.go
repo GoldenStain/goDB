@@ -32,8 +32,8 @@ func NewOnlineServiceServer(db *gorm.DB, matchThreshole_in int32) *OnlineService
 func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCustomerRequest) (*pb.QueryCustomerResponse, error) {
 	var customers []models.Customer
 	input := req.GetInput()
-	var feedbacks []string
 	customerMap := make(map[int32]models.Customer)
+	feedbackMap := make(map[int32]string)
 
 	if input != "" {
 		// 尝试匹配 online_id
@@ -41,8 +41,8 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 		if err := s.db.Preload("CustomerOrders").Where("online_id LIKE ?", "%"+input+"%").Find(&onlineIDCustomers).Error; err == nil && len(onlineIDCustomers) > 0 {
 			for _, customer := range onlineIDCustomers {
 				customerMap[customer.ID] = customer
+				feedbackMap[customer.ID] = "Matched by online_id"
 			}
-			feedbacks = append(feedbacks, "Matched by online_id")
 		}
 
 		// 尝试匹配 name
@@ -50,8 +50,8 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 		if err := s.db.Preload("CustomerOrders").Where("name LIKE ?", "%"+input+"%").Find(&nameCustomers).Error; err == nil && len(nameCustomers) > 0 {
 			for _, customer := range nameCustomers {
 				customerMap[customer.ID] = customer
+				feedbackMap[customer.ID] = "Matched by name"
 			}
-			feedbacks = append(feedbacks, "Matched by name")
 		}
 
 		// 尝试匹配 address
@@ -59,8 +59,8 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 		if err := s.db.Preload("CustomerOrders").Where("address LIKE ?", "%"+input+"%").Find(&addressCustomers).Error; err == nil && len(addressCustomers) > 0 {
 			for _, customer := range addressCustomers {
 				customerMap[customer.ID] = customer
+				feedbackMap[customer.ID] = "Matched by address"
 			}
-			feedbacks = append(feedbacks, "Matched by address")
 		}
 
 		// 尝试将输入转换为整数并匹配 CustomerOrder ID
@@ -70,7 +70,7 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 				var customer models.Customer
 				if err := s.db.Preload("CustomerOrders").Where("online_id = ?", customerOrder.CustomerOnlineID).First(&customer).Error; err == nil {
 					customerMap[customer.ID] = customer
-					feedbacks = append(feedbacks, "Matched by CustomerOrder ID")
+					feedbackMap[customer.ID] = "Matched by CustomerOrder ID"
 				}
 			}
 		}
@@ -107,7 +107,7 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 		}
 		pbCustomer := &pb.Customer{
 			OnlineId:       customer.OnlineID,
-			Name:           customer.Name,
+			Name:           fmt.Sprintf("%s (%s)", customer.Name, feedbackMap[customer.ID]),
 			Address:        customer.Address,
 			CustomerOrders: pbOrders,
 		}
@@ -116,7 +116,7 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 
 	return &pb.QueryCustomerResponse{
 		Success:   true,
-		Feedback:  fmt.Sprintf("Matched by: %v", feedbacks),
+		Feedback:  "Customers found",
 		Customers: pbCustomers,
 	}, nil
 }
@@ -125,17 +125,19 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 func (s *OnlineServiceServer) QueryBook(ctx context.Context, req *pb.QueryBookRequest) (*pb.QueryBookResponse, error) {
 	var books []models.Book
 	input := req.GetInput()
-	var feedbacks []string
 	bookMap := make(map[int32]models.Book)
+	feedbackMap := make(map[int32]string)
+	matchScoreMap := make(map[int32]float64)
 
 	if input != "" {
 		// 尝试匹配 book_no
 		var bookNoBooks []models.Book
 		if err := s.db.Where("book_no LIKE ?", "%"+input+"%").Find(&bookNoBooks).Error; err == nil && len(bookNoBooks) > 0 {
 			for _, book := range bookNoBooks {
-				if isMatch(input, book.BookNo, s.matchThreshold) {
+				if matchScore := getMatchScore(input, book.BookNo); matchScore >= float64(s.matchThreshold) {
 					bookMap[book.ID] = book
-					feedbacks = append(feedbacks, "Matched by book_no")
+					feedbackMap[book.ID] = "Matched by book_no"
+					matchScoreMap[book.ID] = matchScore
 				}
 			}
 		}
@@ -144,9 +146,10 @@ func (s *OnlineServiceServer) QueryBook(ctx context.Context, req *pb.QueryBookRe
 		var titleBooks []models.Book
 		if err := s.db.Where("title LIKE ?", "%"+input+"%").Find(&titleBooks).Error; err == nil && len(titleBooks) > 0 {
 			for _, book := range titleBooks {
-				if isMatch(input, book.Title, s.matchThreshold) {
+				if matchScore := getMatchScore(input, book.Title); matchScore >= float64(s.matchThreshold) {
 					bookMap[book.ID] = book
-					feedbacks = append(feedbacks, "Matched by title")
+					feedbackMap[book.ID] = "Matched by title"
+					matchScoreMap[book.ID] = matchScore
 				}
 			}
 		}
@@ -155,9 +158,10 @@ func (s *OnlineServiceServer) QueryBook(ctx context.Context, req *pb.QueryBookRe
 		var publisherNameBooks []models.Book
 		if err := s.db.Where("publisher_name LIKE ?", "%"+input+"%").Find(&publisherNameBooks).Error; err == nil && len(publisherNameBooks) > 0 {
 			for _, book := range publisherNameBooks {
-				if isMatch(input, book.PublisherName, s.matchThreshold) {
+				if matchScore := getMatchScore(input, book.PublisherName); matchScore >= float64(s.matchThreshold) {
 					bookMap[book.ID] = book
-					feedbacks = append(feedbacks, "Matched by publisher_name")
+					feedbackMap[book.ID] = "Matched by publisher_name"
+					matchScoreMap[book.ID] = matchScore
 				}
 			}
 		}
@@ -166,9 +170,10 @@ func (s *OnlineServiceServer) QueryBook(ctx context.Context, req *pb.QueryBookRe
 		var keywordsBooks []models.Book
 		if err := s.db.Where("keywords LIKE ?", "%"+input+"%").Find(&keywordsBooks).Error; err == nil && len(keywordsBooks) > 0 {
 			for _, book := range keywordsBooks {
-				if isKeywordsMatch(input, book.Keywords, s.matchThreshold) {
+				if matchScore := getKeywordsMatchScore(input, book.Keywords, s); matchScore >= float64(s.matchThreshold) {
 					bookMap[book.ID] = book
-					feedbacks = append(feedbacks, "Matched by keywords")
+					feedbackMap[book.ID] = "Matched by keywords"
+					matchScoreMap[book.ID] = matchScore
 				}
 			}
 		}
@@ -177,9 +182,10 @@ func (s *OnlineServiceServer) QueryBook(ctx context.Context, req *pb.QueryBookRe
 		var authorsBooks []models.Book
 		if err := s.db.Where("authors LIKE ?", "%"+input+"%").Find(&authorsBooks).Error; err == nil && len(authorsBooks) > 0 {
 			for _, book := range authorsBooks {
-				if isAuthorsMatch(input, book.Authors, s.matchThreshold) {
+				if matchScore := getAuthorsMatchScore(input, book.Authors, s); matchScore >= float64(s.matchThreshold) {
 					bookMap[book.ID] = book
-					feedbacks = append(feedbacks, "Matched by authors")
+					feedbackMap[book.ID] = "Matched by authors"
+					matchScoreMap[book.ID] = matchScore
 				}
 			}
 		}
@@ -201,7 +207,7 @@ func (s *OnlineServiceServer) QueryBook(ctx context.Context, req *pb.QueryBookRe
 		pbBook := &pb.Book{
 			Id:            book.ID,
 			BookNo:        book.BookNo,
-			Title:         book.Title,
+			Title:         fmt.Sprintf("%s (%s, %.2f%%)", book.Title, feedbackMap[book.ID], matchScoreMap[book.ID]),
 			PublisherName: book.PublisherName,
 			Price:         book.Price,
 			Keywords:      book.Keywords,
@@ -215,56 +221,63 @@ func (s *OnlineServiceServer) QueryBook(ctx context.Context, req *pb.QueryBookRe
 
 	return &pb.QueryBookResponse{
 		Success:  true,
-		Feedback: fmt.Sprintf("Matched by: %v", feedbacks),
+		Feedback: "Books found",
 		Books:    pbBooks,
 	}, nil
 }
 
-func isMatch(query, target string, threshold int32) bool {
+func getMatchScore(query, target string) float64 {
 	distance := levenshtein.ComputeDistance(query, target)
 	maxLen := max(len(query), len(target))
-	matchScore := (1 - float64(distance)/float64(maxLen)) * 100
-	return matchScore >= float64(threshold)
+	return (1 - float64(distance)/float64(maxLen)) * 100
 }
 
-func isKeywordsMatch(query, target string, threshold int32) bool {
+func getKeywordsMatchScore(query, target string, s *OnlineServiceServer) float64 {
 	queryKeywords := strings.Split(query, ",")
 	targetKeywords := strings.Split(target, ",")
 
+	var totalScore float64
+	var matchedCount int
+
 	for _, qk := range queryKeywords {
-		matched := false
 		for _, tk := range targetKeywords {
-			if isMatch(qk, tk, threshold) {
-				matched = true
+			if matchScore := getMatchScore(qk, tk); matchScore >= float64(s.matchThreshold) {
+				totalScore += matchScore
+				matchedCount++
 				break
 			}
 		}
-		if !matched {
-			return false
-		}
 	}
 
-	return true
+	if matchedCount == 0 {
+		return 0
+	}
+
+	return totalScore / float64(matchedCount)
 }
 
-func isAuthorsMatch(query, target string, threshold int32) bool {
+func getAuthorsMatchScore(query, target string, s *OnlineServiceServer) float64 {
 	queryAuthors := strings.Split(query, ",")
 	targetAuthors := strings.Split(target, ",")
 
+	var totalScore float64
+	var matchedCount int
+
 	for _, qa := range queryAuthors {
-		matched := false
 		for _, ta := range targetAuthors {
-			if isMatch(qa, ta, threshold) {
-				matched = true
+			if matchScore := getMatchScore(qa, ta); matchScore >= float64(s.matchThreshold) {
+				totalScore += matchScore
+				matchedCount++
 				break
 			}
 		}
-		if !matched {
-			return false
-		}
 	}
 
-	return true
+	if matchedCount == 0 {
+		return 0
+	}
+
+	return totalScore / float64(matchedCount)
 }
 
 func max(a, b int) int {

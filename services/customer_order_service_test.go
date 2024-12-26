@@ -16,7 +16,7 @@ func setupTestDBCustomerOrder(t *testing.T) *gorm.DB {
 	if err != nil {
 		t.Fatalf("failed to open database: %v", err)
 	}
-	if err := models.AutoMigrate(db); err != nil {
+	if err := db.AutoMigrate(&models.Book{}, &models.Customer{}, &models.CustomerOrder{}, &models.StockRequest{}); err != nil {
 		t.Fatalf("failed to migrate database: %v", err)
 	}
 	return db
@@ -69,8 +69,13 @@ func TestCreateCustomerOrder(t *testing.T) {
 
 	// 验证客户余额更新
 	var updatedCustomer models.Customer
-	db.First(&updatedCustomer, "online_id = ?", "customer1")
-	assert.Equal(t, int32(900), updatedCustomer.AccountBalance)
+	db.Preload("CustomerOrders").First(&updatedCustomer, "online_id = ?", "customer1")
+	assert.Equal(t, int32(910), updatedCustomer.AccountBalance)
+
+	// 验证客户订单关联
+	assert.Equal(t, 1, len(updatedCustomer.CustomerOrders))
+	assert.Equal(t, "B001", updatedCustomer.CustomerOrders[0].BookNo)
+	assert.Equal(t, int32(5), updatedCustomer.CustomerOrders[0].BookCount)
 }
 
 func TestCreateCustomerOrderInsufficientStock(t *testing.T) {

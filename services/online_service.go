@@ -38,7 +38,7 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 	if input != "" {
 		// 尝试匹配 online_id
 		var onlineIDCustomers []models.Customer
-		if err := s.db.Where("online_id LIKE ?", "%"+input+"%").Find(&onlineIDCustomers).Error; err == nil && len(onlineIDCustomers) > 0 {
+		if err := s.db.Preload("CustomerOrders").Where("online_id LIKE ?", "%"+input+"%").Find(&onlineIDCustomers).Error; err == nil && len(onlineIDCustomers) > 0 {
 			for _, customer := range onlineIDCustomers {
 				customerMap[customer.ID] = customer
 			}
@@ -47,7 +47,7 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 
 		// 尝试匹配 name
 		var nameCustomers []models.Customer
-		if err := s.db.Where("name LIKE ?", "%"+input+"%").Find(&nameCustomers).Error; err == nil && len(nameCustomers) > 0 {
+		if err := s.db.Preload("CustomerOrders").Where("name LIKE ?", "%"+input+"%").Find(&nameCustomers).Error; err == nil && len(nameCustomers) > 0 {
 			for _, customer := range nameCustomers {
 				customerMap[customer.ID] = customer
 			}
@@ -56,7 +56,7 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 
 		// 尝试匹配 address
 		var addressCustomers []models.Customer
-		if err := s.db.Where("address LIKE ?", "%"+input+"%").Find(&addressCustomers).Error; err == nil && len(addressCustomers) > 0 {
+		if err := s.db.Preload("CustomerOrders").Where("address LIKE ?", "%"+input+"%").Find(&addressCustomers).Error; err == nil && len(addressCustomers) > 0 {
 			for _, customer := range addressCustomers {
 				customerMap[customer.ID] = customer
 			}
@@ -68,7 +68,7 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 			var customerOrder models.CustomerOrder
 			if err := s.db.First(&customerOrder, orderId).Error; err == nil {
 				var customer models.Customer
-				if err := s.db.Where("online_id = ?", customerOrder.CustomerOnlineID).First(&customer).Error; err == nil {
+				if err := s.db.Preload("CustomerOrders").Where("online_id = ?", customerOrder.CustomerOnlineID).First(&customer).Error; err == nil {
 					customerMap[customer.ID] = customer
 					feedbacks = append(feedbacks, "Matched by CustomerOrder ID")
 				}
@@ -89,10 +89,27 @@ func (s *OnlineServiceServer) QueryCustomer(ctx context.Context, req *pb.QueryCu
 
 	var pbCustomers []*pb.Customer
 	for _, customer := range customers {
+		var pbOrders []*pb.CustomerOrder
+		for _, order := range customer.CustomerOrders {
+			pbOrder := &pb.CustomerOrder{
+				Id:               order.ID,
+				OrderDate:        order.OrderDate,
+				CustomerOnlineId: order.CustomerOnlineID,
+				BookNo:           order.BookNo,
+				BookCount:        order.BookCount,
+				Price:            order.Price,
+				Address:          order.Address,
+				Status:           order.Status,
+				CreatedAt:        timestamppb.New(order.CreatedAt),
+				UpdatedAt:        timestamppb.New(order.UpdatedAt),
+			}
+			pbOrders = append(pbOrders, pbOrder)
+		}
 		pbCustomer := &pb.Customer{
-			OnlineId: customer.OnlineID,
-			Name:     customer.Name,
-			Address:  customer.Address,
+			OnlineId:       customer.OnlineID,
+			Name:           customer.Name,
+			Address:        customer.Address,
+			CustomerOrders: pbOrders,
 		}
 		pbCustomers = append(pbCustomers, pbCustomer)
 	}

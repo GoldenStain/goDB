@@ -185,13 +185,13 @@ func (s *CustomerOrderServiceServer) CreateCustomerOrder(ctx context.Context, re
 		}, nil
 	}
 
-	// 手动将订单添加到客户的 CustomerOrders 列表中
-	if err := s.db.Model(&customer).Association("CustomerOrders").Append(&customerOrder); err != nil {
-		return &pb.CreateCustomerOrderResponse{
-			Success:  false,
-			Feedback: fmt.Sprintf("Failed to associate customer order: %v", err),
-		}, nil
-	}
+	// // 手动将订单添加到客户的 CustomerOrders 列表中
+	// if err := s.db.Model(&customer).Association("CustomerOrders").Append(&customerOrder); err != nil {
+	// 	return &pb.CreateCustomerOrderResponse{
+	// 		Success:  false,
+	// 		Feedback: fmt.Sprintf("Failed to associate customer order: %v", err),
+	// 	}, nil
+	// }
 
 	// 返回成功的响应
 	return &pb.CreateCustomerOrderResponse{

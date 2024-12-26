@@ -135,6 +135,7 @@ func (s *PurchaseOrderServiceServer) GetPurchaseOrder(ctx context.Context, req *
 			Author:    purchaseOrder.Author,
 			Quantity:  purchaseOrder.Quantity,
 			OrderDate: purchaseOrder.OrderDate,
+			Finished:  purchaseOrder.Finished,
 		}
 
 		pbPurchaseOrders = append(pbPurchaseOrders, pbPurchaseOrder)

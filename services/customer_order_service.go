@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"fmt"
+	"time"
 
 	pb "github.com/GoldenStain/goDB/bookstorepb"
 	"github.com/GoldenStain/goDB/models"
@@ -86,6 +87,53 @@ func (s *CustomerOrderServiceServer) CreateCustomerOrder(ctx context.Context, re
 		}, nil
 	}
 
+	// 查找书籍信息
+	var book models.Book
+	if err := s.db.Where("book_no = ?", req.GetBookNo()).First(&book).Error; err != nil {
+		// 如果书籍不存在，创建新书记录
+		book = models.Book{
+			BookNo:        req.GetBookNo(),
+			Title:         "Unknown Title",
+			PublisherName: "Unknown Publisher",
+			Authors:       "Unknown Author",
+			StockQuantity: 0,
+			CreatedAt:     time.Now(),
+			UpdatedAt:     time.Now(),
+		}
+		if err := s.db.Create(&book).Error; err != nil {
+			return &pb.CreateCustomerOrderResponse{
+				Success:  false,
+				Feedback: fmt.Sprintf("Failed to create book: %v", err),
+			}, nil
+		}
+	}
+
+	// 检查库存是否足够
+	if book.StockQuantity < req.GetBookCount() {
+		// 如果库存不足，创建缺书记录
+		stockRequest := &models.StockRequest{
+			BookNo:      req.GetBookNo(),
+			Title:       book.Title,
+			Publisher:   book.PublisherName,
+			Supplier:    "Unknown Supplier",
+			Author:      book.Authors,
+			Quantity:    req.GetBookCount() - book.StockQuantity,
+			RequestDate: time.Now().Format("2006-01-02"),
+			CreatedAt:   time.Now(),
+			UpdatedAt:   time.Now(),
+		}
+		if err := s.db.Create(&stockRequest).Error; err != nil {
+			return &pb.CreateCustomerOrderResponse{
+				Success:  false,
+				Feedback: fmt.Sprintf("Failed to create stock request: %v", err),
+			}, nil
+		}
+		return &pb.CreateCustomerOrderResponse{
+			Success:  false,
+			Feedback: "Insufficient stock, stock request created",
+		}, nil
+	}
+
 	// 计算折扣后的价格
 	discount := discount[customer.CreditLevel]
 	finalPrice := req.GetPrice() * (100 - int32(discount)) / 100
@@ -107,6 +155,15 @@ func (s *CustomerOrderServiceServer) CreateCustomerOrder(ctx context.Context, re
 		}, nil
 	}
 
+	// 更新库存
+	book.StockQuantity -= req.GetBookCount()
+	if err := s.db.Save(&book).Error; err != nil {
+		return &pb.CreateCustomerOrderResponse{
+			Success:  false,
+			Feedback: fmt.Sprintf("Failed to update stock: %v", err),
+		}, nil
+	}
+
 	// 构建新的 CustomerOrder 对象
 	customerOrder := &models.CustomerOrder{
 		OrderDate:        req.GetOrderDate(),
@@ -116,13 +173,15 @@ func (s *CustomerOrderServiceServer) CreateCustomerOrder(ctx context.Context, re
 		Price:            req.GetPrice(),
 		Address:          req.GetAddress(),
 		Status:           req.GetStatus(),
+		CreatedAt:        time.Now(),
+		UpdatedAt:        time.Now(),
 	}
 
 	// 写入数据库
 	if err := s.db.Create(&customerOrder).Error; err != nil {
 		return &pb.CreateCustomerOrderResponse{
 			Success:  false,
-			Feedback: fmt.Sprintf("failed to create customer order: %v", err),
+			Feedback: fmt.Sprintf("Failed to create customer order: %v", err),
 		}, nil
 	}
 

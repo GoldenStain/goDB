@@ -200,14 +200,14 @@ service StockRequestService {
   // 创建缺书登记记录
   rpc CreateStockRequest(CreateStockRequestRequest) returns (CreateStockRequestResponse);
 
-//   // 获取缺书登记的详细信息
-//   rpc GetStockRequest(GetStockRequestRequest) returns (GetStockRequestResponse);
+  // 获取缺书登记的详细信息
+  rpc GetStockRequest(GetStockRequestRequest) returns (GetStockRequestResponse);
 
   // 更新缺书登记记录
   rpc UpdateStockRequest(UpdateStockRequestRequest) returns (UpdateStockRequestResponse);
 
-//   // 删除缺书登记记录
-//   rpc DeleteStockRequest(DeleteStockRequestRequest) returns (DeleteStockRequestResponse);
+  // 删除缺书登记记录
+  rpc DeleteStockRequest(DeleteStockRequestRequest) returns (DeleteStockRequestResponse);
 }
 
 // 创建缺书登记请求
@@ -246,15 +246,17 @@ message UpdateStockRequestResponse {
   string feedback = 2;
 }
 
-/*
 // 获取缺书登记请求
 message GetStockRequestRequest {
-  int32  stock_request_id = 1;
+  int32 start = 1;
+  int32 stop = 2;
 }
 
 // 获取缺书登记应答
 message GetStockRequestResponse {
-  StockRequest stock_request = 1;
+  bool success = 1;
+  string feedback = 2;
+  repeated StockRequest stock_requests = 3;
 }
 
 // 删除缺书登记请求
@@ -265,8 +267,9 @@ message DeleteStockRequestRequest {
 // 删除缺书登记应答
 message DeleteStockRequestResponse {
   bool success = 1;
+  string feedback = 2;
 }
-*/
+
 /*--------------------------------------------缺书部分--------------------------------------------*/
 
 /*--------------------------------------------采购单部分--------------------------------------------*/

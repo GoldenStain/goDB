@@ -165,7 +165,7 @@ func (s *PurchaseOrderServiceServer) UpdatePurchaseOrder(ctx context.Context, re
 	}
 
 	// 更新字段
-	if req.GetBookNo() != "" {
+	if req.GetBookNo() != purchaseOrder.BookNo {
 		// 这个字段不能更改
 		return &pb.UpdatePurchaseOrderResponse{
 			Success:  false,

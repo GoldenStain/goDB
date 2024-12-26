@@ -8,12 +8,15 @@ import (
 	"os"
 
 	pb "github.com/GoldenStain/goDB/bookstorepb"
+
 	"github.com/GoldenStain/goDB/models"
 	"github.com/GoldenStain/goDB/services"
 	"google.golang.org/grpc"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
+
+var matchThreshold int32
 
 // Config 用来读取配置文件中的数据
 type Config struct {
@@ -24,6 +27,7 @@ type Config struct {
 		Password string `json:"password"`
 		DBName   string `json:"dbname"`
 	} `json:"db"`
+	Threshold int32 `json:"threshold"`
 }
 
 // 读取配置文件
@@ -44,6 +48,8 @@ func loadConfig(file string) (*Config, error) {
 
 // 初始化数据库连接
 func initDB(config *Config) (*gorm.DB, error) {
+	matchThreshold = config.Threshold
+
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Asia%%2FShanghai",
 		config.DB.User, config.DB.Password, config.DB.Host, config.DB.Port, config.DB.DBName)
 
@@ -112,7 +118,7 @@ func registerRpcServices(gServer *grpc.Server, db *gorm.DB) {
 	pb.RegisterSupplyBookServiceServer(gServer, supplyBookService)
 
 	// 网上查询服务
-	onlineService := services.NewOnlineServiceServer(db)
+	onlineService := services.NewOnlineServiceServer(db, matchThreshold)
 	pb.RegisterOnlineServiceServer(gServer, onlineService)
 }
 

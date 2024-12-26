@@ -5,6 +5,7 @@
 	  "user": "root",
 	  "password": "mysql123456",
 	  "dbname": "library"
-	}
-  }
+	},
+	"threshold": 50
+}
   
